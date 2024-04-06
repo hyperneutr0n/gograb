@@ -1,7 +1,14 @@
 <?php
-if (isset($_POST['register-submit'])) {
-    require "dbsetting.inc.php";
+require "dbsetting.inc.php";
+function generateID()
+{
+    $currdate = date("YmdHis");
+    $id = "GGRB" . $currdate;
+    return $id;
+}
 
+
+if (isset($_POST['register-submit'])) {
     $fullname = $_POST["full-name"];
     $username = $_POST["username"];
     $email = $_POST["email"];
@@ -40,10 +47,21 @@ if (isset($_POST['register-submit'])) {
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             header("Location: ../register.php?error=sqlerror");
             exit();
-        }
-        else {
-            mysqli_stmt_bind_param($stmt,"s", $username);
+        } else {
+            mysqli_stmt_bind_param($stmt, "s", $username);
             mysqli_stmt_execute($stmt);
+            mysqli_stmt_store_result($stmt);
+            $result_check = mysqli_stmt_num_rows($stmt);
+            if ($result_check > 0) {
+                header("Location: ../register.php?error=usernametaken" .
+                    "&fullname=" . $fullname .
+                    "&email=" . $email .
+                    "&mobile=" . $mobilenumber);
+                exit();
+            } else {
+                $hashpass = password_hash($password, PASSWORD_DEFAULT);
+                $sql = "INSERT INTO customers VALUES(?,?,?)";
+            }
         }
     }
 }
