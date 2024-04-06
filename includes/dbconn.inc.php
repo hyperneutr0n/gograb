@@ -1,8 +1,5 @@
 <?php
-$dbServer = "localhost";
-$dbUsername = "root";
-$dbPassword = "";
-$dbName = "gograb";
+require "dbsetting.php";
 
 $conn = new mysqli($dbServer, $dbUser, $dbPassword, $dbName);
 

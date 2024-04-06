@@ -1,5 +1,5 @@
 <?php
-require "dbsetting.inc.php";
+require "dbconn.inc.php";
 function generateID()
 {
     $currdate = date("YmdHis");
