@@ -1,0 +1,23 @@
+.container-login{
+    margin-top: 20vh;
+}
+
+.balance{
+    font-family: 'Times New Roman', Times, serif; /* nanti ganti font e */
+}
+
+.main-background{
+    background-color: green;
+}
+
+input[type="password"] {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 0 auto; /* Set maximum width as needed */
+}
+
+input[type="text"] {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 0 auto /* Set maximum width as needed */
+}
