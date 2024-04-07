@@ -7,6 +7,7 @@ if (isset($_SESSION['userLogged'])) { //SESSION berfungsi untuk store data dan b
     require "header.php";
 } else {
     $userLogged = false;
+    $_SESSION['userLogged'] = $userLogged;
     header("Location: login.php");
 }
 ?>

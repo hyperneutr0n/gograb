@@ -35,12 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <p style="text-align:left">Full Name:</p>
                     <div class="form-group justify-content-center">
                     </div>
-                    <input type="text" name="name" placeholder="Full Name" required>
+                    <input type="text" name="name"class = "form-control" placeholder="Full Name" required>
                 </div>
                 <div class="col"><!-- isi kolom kedua -->
                     <p style="text-align:left">Username:</p>
                     <div class="form-group justify-content-center">
-                        <input type="text" name="username" placeholder="Username" required>
+                        <input type="text" name="username" class="form-control" placeholder="Username" required>
                     </div>
                 </div>
             </div>
@@ -48,22 +48,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col">
                     <p style="text-align:left">Email:</p>
                     <div class="form-group justify-content-center">
-                        <input type="text" name="email" placeholder="Email" required>
+                        <input type="text" name="email" class="form-control" placeholder="Email" required>
                     </div>
                 </div>
                 <div class="col">
                     <p style="text-align: left">Mobile Number:</p>
                     <div class="form-group d-flex">
-                        <input type="text" name="mobilenumber" placeholder="+62" disabled style="width:35px">
-                        <input type="text" name="mobilenumber" placeholder="xxxx-xxxx-xxxx" required>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">+62</span>
+                        </div>
+                        <input type="text" class="form-control" name="mobilenumber" placeholder="xxxx-xxxx-xxxx" required>
                     </div>
                 </div>
+
             </div>
             <div class="row">
                 <div class="col">
                     <p style="text-align:left">Password:</p>
                     <div class="form-group justify-content-center">
-                        <input type="password" name="password" placeholder="Password" required>
+                        <input type="password" name="password" class="form-control" placeholder="Password" required>
                     </div>
                 </div>
                 <div class="col">
@@ -71,13 +74,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         Confirm Password:
                     </p>
                     <div class="form-group">
-                        <input type="password" name="confirm" placeholder="Confirm Password" required>
+                        <input type="password" name="confirm" class="form-control" placeholder="Confirm Password" required>
                     </div>
                     <!-- Untuk spacing -->
                 </div>
             </div>
             <div class="row justify-content-end mr-2">
-                <button type="submit" class="btn btn-primary" name = "register-submit">Register</button>
+                <button type="submit" class="btn btn-primary" name="register-submit">Register</button>
             </div>
             <div class="row mt-4">
                 <!-- Untuk spacing -->

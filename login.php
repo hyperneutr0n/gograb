@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 $userLogged = $_SESSION["userLogged"];
 
@@ -9,6 +8,8 @@ if ($userLogged == true) {
     require "header.php";
 }
 
+
+/*  di comment karena pengecekannya nanti melalui database ini hanya simple checking
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["username"]) && isset($_POST["password"])) {
@@ -20,14 +21,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         header("Location: index.php");
     }
-}
+} */ 
 ?>
 <main>
     <form method="post" action="includes/login.inc.php" class="text-center">
         <div class="container container-login bg-light">
             <p>Sign in</p>
-            <div class="row">
-                <div class="col">
+            <div class="row justify-content-center">
+                <div class="col-5">
                     <p style="text-align: left">Username</p>
                     <div class="form-group d-flex justify-content-center align-items-center">
                         <input type="text" class="form-control" autofocus placeholder="Username" name="username">
@@ -35,8 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
+            <div class="row justify-content-center">
+                <div class="col-5">
                     <p style="text-align: left">Password</p>
                     <div class="form-group d-flex justify-content-center align-items-center">
                         <input type="password" class="form-control" placeholder="Password" name="password">
@@ -44,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-end mr-4">
+            <div class="row justify-content-center">
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
             <div class="row mt-4">
@@ -53,3 +54,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </form>
 </main>
+
+<?php require "footer.php" ?>
