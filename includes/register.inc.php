@@ -48,7 +48,7 @@ if (isset($_POST['register-submit'])) {
             header("Location: ../register.php?error=sqlerror");
             exit();
         } else {
-            mysqli_stmt_bind_param($stmt, "s", $username);
+            mysqli_stmt_bind_param($stmt, "s",  $username);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_store_result($stmt);
             $result_check = mysqli_stmt_num_rows($stmt);
@@ -59,9 +59,28 @@ if (isset($_POST['register-submit'])) {
                     "&mobile=" . $mobilenumber);
                 exit();
             } else {
+                //sedkit beda dari video e soalnya rada bingung di awal buatanmu
+                //kok langsung hashpass, tapi haruse jalan 
                 $hashpass = password_hash($password, PASSWORD_DEFAULT);
-                $sql = "INSERT INTO customers VALUES(?,?,?)";
+                $sql = "INSERT INTO customers (username, password, fullname, email, mobile) VALUES(?,?,?,?,?)";
+                $stmt = mysqli_stmt_init($conn);
+                if (!mysqli_stmt_bind_param($stmt, $sql)) {
+                    //error handling
+                    header("Location: ../register.php?error=sqlerror");
+                    exit();
+                } else {
+                    //bind param
+                    mysqli_stmt_bind_param($stmt, "sssss", $username, $hashpass, $fullname, $email, $mobilenumber);
+                    mysqli_stmt_execute($stmt);
+                    header("Location: ../register.php?register=success");
+                    exit();
+                }
             }
         }
     }
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+} else {
+    header("Location: ../register.php?error=sqlerror");
+    exit();
 }
