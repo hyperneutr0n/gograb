@@ -1,5 +1,9 @@
 <?php
-function SodiumEncrypt($message, $key)
+function GenerateKey() {
+    return random_bytes(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
+}
+
+function DataEncrypt($message, $key)
 {
     $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
     $encrypted = sodium_crypto_secretbox($message, $nonce, $key);
@@ -7,7 +11,7 @@ function SodiumEncrypt($message, $key)
     return $enconded;
 }
 
-function SodiumDecrypt($message, $key)
+function DataDecrypt($message, $key)
 {
     $decoded = base64_decode($message);
     $nonce = mb_substr($decoded, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, '8bit');
