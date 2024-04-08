@@ -6,9 +6,9 @@ if (isset($_SESSION['userLogged'])) { //SESSION berfungsi untuk store data dan b
     $userLogged = true;
     require "header.php";
 } else {
-    $userLogged = false;
+  /*   $userLogged = false;
     $_SESSION['userLogged'] = $userLogged;
-    header("Location: login.php");
+    header("Location: login.php"); */
 }
 ?>
 <main>
@@ -36,5 +36,4 @@ if (isset($_SESSION['userLogged'])) { //SESSION berfungsi untuk store data dan b
 
 <?php
 require "footer.php";
-
 ?>

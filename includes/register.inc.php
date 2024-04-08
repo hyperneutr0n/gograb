@@ -1,5 +1,7 @@
 <?php
 require "dbconn.inc.php";
+
+session_start();
 function generateID()
 {
     $currdate = date("YmdHis");
@@ -9,18 +11,20 @@ function generateID()
 
 
 if (isset($_POST['register-submit'])) {
-    $fullname = $_POST["full-name"];
+    $id =  generateID();
+    $fullname = $_POST["name"];
     $username = $_POST["username"];
     $email = $_POST["email"];
-    $mobilenumber = $_POST["mobile-number"];
+    $mobilenumber = $_POST["mobilenumber"];
     $password = $_POST["password"];
-    $confirmpass = $_POST["confirm-password"];
+    $confirmpass = $_POST["confirm"];
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         header("Location: ../register.php?error=invalidemail" .
             "&fullname=" . $fullname .
             "&username=" . $username .
             "&mobile=" . $mobilenumber);
+
         exit();
     } else if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
         header("Location: ../register.php?error=invalidusername" .
@@ -62,17 +66,20 @@ if (isset($_POST['register-submit'])) {
                 //sedkit beda dari video e soalnya rada bingung di awal buatanmu
                 //kok langsung hashpass, tapi haruse jalan 
                 $hashpass = password_hash($password, PASSWORD_DEFAULT);
-                $sql = "INSERT INTO customers (username, password, fullname, email, mobile) VALUES(?,?,?,?,?)";
+                $sql = "INSERT INTO customers(id, username, password, nama, email, no_telp,saldo,points) VALUES(?,?,?,?,?,?,?,?)";
                 $stmt = mysqli_stmt_init($conn);
-                if (!mysqli_stmt_bind_param($stmt, $sql)) {
+                if (!mysqli_stmt_prepare($stmt, $sql)) {
                     //error handling
                     header("Location: ../register.php?error=sqlerror");
                     exit();
                 } else {
                     //bind param
-                    mysqli_stmt_bind_param($stmt, "sssss", $username, $hashpass, $fullname, $email, $mobilenumber);
+                    $zero= 0;
+                    mysqli_stmt_bind_param($stmt, "ssssssss", $id, $username, $hashpass, $fullname, $email, $mobilenumber,$zero,$zero);
                     mysqli_stmt_execute($stmt);
                     header("Location: ../register.php?register=success");
+                    $userLogged = true;
+                    $_SESSION["userLogged"] = $userLogged;
                     exit();
                 }
             }

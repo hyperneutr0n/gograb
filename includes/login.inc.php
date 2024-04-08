@@ -1,5 +1,6 @@
 <?php
 require "includes/dbsetting.inc.php";
+session_start();
 
 //pengecekan d db here
 if (isset($_POST["login-submit"])) {
@@ -18,7 +19,9 @@ if (isset($_POST["login-submit"])) {
       mysqli_stmt_bind_param($stmt, "ss", $email, $password);
       mysqli_stmt_execute($stmt);
       $result = mysqli_stmt_get_result($stmt);
-      if ($row = mysqli_fetch_assoc()) {
+      if ($row = mysqli_fetch_assoc($result)) {
+        $userLogged = true;
+        $_SESSION["userLogged"] = $userLogged;
       }
     }
   }
