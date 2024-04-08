@@ -6,28 +6,41 @@ if (isset($_SESSION['userLogged'])) { //SESSION berfungsi untuk store data dan b
     $userLogged = true;
     require "header.php";
 } else {
-  /*   $userLogged = false;
+    $userLogged = false;
     $_SESSION['userLogged'] = $userLogged;
-    header("Location: login.php"); */
+    header("Location: login.php");
 }
 ?>
 <main>
     <div class="container container-login bg-light">
         <div class="row">
-            <div class='d-flex col-auto'>
-                <h3 class='balance'>Welcome XXXXX</h3>
+            <div class="col-8">
+                <label for="">add some pics</label>
+
+            </div>
+            <div class="col-3">
+                <label for="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquid quis, veniam facere amet nihil corporis commodi est cumque praesentium odio perferendis porro natus nemo ipsam dicta fugiat dolore, illum mollitia!</label>
+
             </div>
         </div>
         <div class="row">
-            <div class="col-auto">
-                <h3 class='balance'>Balance: XXXX</h3>
+            <div class="col-8">
+                <label for="">add some pics</label>
+
             </div>
-            <div class="col">
-                <div class="d-flex justify-content-end">
-                    <a href="" class="btn btn-primary ml-1 bg-dark">Pay</a>
-                    <a href="" class="btn btn-primary ml-1 bg-dark">History</a>
-                    <a href="" class="btn btn-primary ml-1 bg-dark">More</a>
-                </div>
+            <div class="col-3">
+                <label for="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquid quis, veniam facere amet nihil corporis commodi est cumque praesentium odio perferendis porro natus nemo ipsam dicta fugiat dolore, illum mollitia!</label>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <label for="">add some pics</label>
+
+            </div>
+            <div class="col-3">
+                <label for="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquid quis, veniam facere amet nihil corporis commodi est cumque praesentium odio perferendis porro natus nemo ipsam dicta fugiat dolore, illum mollitia!</label>
+
             </div>
         </div>
     </div>

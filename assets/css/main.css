@@ -21,8 +21,6 @@ input[type="text"] {
     width: 100%;
     max-width: 0 auto /* Set maximum width as needed */
 }
-
-
 /* footer css footer bagian aaron*/  
 body {
     font-family: sans-serif, sans-serif;
@@ -34,6 +32,8 @@ body {
     min-height: 100vh;
     /* Set minimum height to viewport height */
 }
+
+
 
 .content {
     flex: 1;
@@ -50,6 +50,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    bottom:0;
+    position: fixed;
 }
 
 .footer h1 {

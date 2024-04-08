@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top"> <!-- menggunakan class navbar dari bootstrap, navbar-expand-md itu berarti sampai screen berada di size medium navbar akan expand, navbar-dark untuk fontnya, bg itu background-->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top" style = "background-color: black;"> <!-- menggunakan class navbar dari bootstrap, navbar-expand-md itu berarti sampai screen berada di size medium navbar akan expand, navbar-dark untuk fontnya, bg itu background-->
         <a class="navbar-brand ml-5" href="#">GoGrab</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> <!-- intinya ini utk collapse semisal screen sizenya dibawah medium, yang penting itu class navbar-toggler dan data target, datatargetnya menjadi id di div class agar jika kondisi terpenuhi akan collapse -->
             <span class="navbar-toggler-icon"></span><!--  katanya chatgpt ini placeholder but this is literally an icon -->
@@ -24,8 +24,8 @@
                 if ($userLogged) {  //krn sudah ada pengecekan di atas jika udah log in maka tampilan berbeda sesuai hak akses
                     echo ' 
                         <a class = "nav-item nav-link ml-2 mr-2" href = "ride.php"> Ride</a>
-                        <div class="dropdown bg-dark">
-                        <button class="btn btn-secondary dropdown-toggle bg-transparent mt-0.5" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle bg-transparent mt-0.5" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color:black;">
                         Account
                         </button>
                         <div class="dropdown-menu dropdown-menu-right bg-light" aria-labelledby="dropdownMenuButton">
