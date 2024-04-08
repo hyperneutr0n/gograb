@@ -1,13 +1,11 @@
 <?php
 session_start(); //membuat session ID ini dijalankan sebelum html digenerate
 
-$userLogged = false;
-if (isset($_SESSION['userLogged'])) { //SESSION berfungsi untuk store data dan bisa digunakan cross website tanpa session $userLogged masih bisa diakses di sini tanpa di redeclare, session berguna hnya utk manipulasi data
-    $userLogged = true;
+$userLogged= $_SESSION["userLogged"];
+
+if ($userLogged) { //SESSION berfungsi untuk store data dan bisa digunakan cross website tanpa session $userLogged masih bisa diakses di sini tanpa di redeclare, session berguna hnya utk manipulasi data
     require "header.php";
 } else {
-    $userLogged = false;
-    $_SESSION['userLogged'] = $userLogged;
     header("Location: login.php");
 }
 ?>

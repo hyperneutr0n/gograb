@@ -48,9 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="row justify-content-center">
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
-            <div class="row mt-4">
-
-            </div>
+            <div class="row mt-4"></div>
+            <div class="row mt-4"></div>
         </div>
     </form>
 </main>
