@@ -1,5 +1,4 @@
 <?php
-session_start();
 $userLogged = $_SESSION["userLogged"];
 
 if ($userLogged == true) {
@@ -21,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         header("Location: index.php");
     }
-} */ 
+} */
 ?>
 <main>
     <form method="post" action="includes/login.inc.php" class="text-center">
@@ -31,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-5">
                     <p style="text-align: left">Username</p>
                     <div class="form-group d-flex justify-content-center align-items-center">
-                        <input type="text" class="form-control" autofocus placeholder="Username" name="username">
+                        <input type="text" class="form-control" autofocus placeholder="Username" name="username" required>
                         <i class="fas fa-user ml-2"></i>
                     </div>
                 </div>
@@ -40,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-5">
                     <p style="text-align: left">Password</p>
                     <div class="form-group d-flex justify-content-center align-items-center">
-                        <input type="password" class="form-control" placeholder="Password" name="password">
+                        <input type="password" class="form-control" placeholder="Password" name="password" required>
                         <i class="fas fa-lock ml-2"></i>
                     </div>
                 </div>
