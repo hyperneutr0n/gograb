@@ -1,9 +1,9 @@
 <?php
-$userLogged = $_SESSION["userLogged"];
-
-if ($userLogged == true) {
+if (isset($_SESSION["userLogged"]) && $_SESSION["userLogged"]== true) {
     header("Location: index.php");
+    exit();
 } else {
+    $userLogged = false;
     require "header.php";
 }
 
@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <div class="row justify-content-center">
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary" name = "login-submit">Login</button>
             </div>
             <div class="row mt-4"></div>
             <div class="row mt-4"></div>

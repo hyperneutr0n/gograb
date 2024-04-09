@@ -1,29 +1,10 @@
 <?php
-session_start();
-
-$userLogged = $_SESSION["userLogged"];
-
-if ($userLogged) {
-
-    header("Location:index.php");
+if (isset($_SESSION["userLogged"]) && $_SESSION["userLogged"]== true) {
+    header("Location: index.php");
+    exit();
 } else {
+    $userLogged = false;
     require "header.php";
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["firstname"]) && isset($_POST["lastname"]) && isset($_POST["email"]) && isset($_POST["mobilenumber"]) && isset($_POST["password"])) {
-        $firstname = $_POST["firstname"];
-        $lastname = $_POST["lastname"];
-        $name = $firstname . $lastname;
-        $email = $_POST["email"];
-        $mobilenumber = $_POST["mobilenumber"];
-        $password = $_POST["password"];
-
-        //isi masukno database and stuff
-
-
-        header("Location: index.php");
-    }
 }
 ?>
 <main>

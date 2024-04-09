@@ -1,7 +1,3 @@
-<?php
-session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +33,7 @@ session_start();
                         <div class="dropdown-menu dropdown-menu-right bg-light" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="#">Personal Information</a>
                           <form action = "includes/logout.inc.php" method = "POST">
-                          <a class="dropdown-item" href = "" name = "logout-submit">Logout</a>
+                          <a class="dropdown-item" href = "logout.php">Logout</a>
                           </form>
                         </div>
                       </div>       

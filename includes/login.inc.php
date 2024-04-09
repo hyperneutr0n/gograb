@@ -9,7 +9,7 @@ if (isset($_POST["login-submit"])) {
   $sql = "SELECT * FROM customers WHERE id=? OR username=?;";
   $stmt = mysqli_stmt_init($conn);
   if (!mysqli_stmt_prepare($stmt, $sql)) {
-    header("Location: ../index.php/?error=sqlerror");
+    header("Location: ../login.php?error=sqlerror");
     exit();
   } else {
     mysqli_stmt_bind_param($stmt, "ss", $username, $username);
@@ -17,26 +17,32 @@ if (isset($_POST["login-submit"])) {
     $result = mysqli_stmt_get_result($stmt);
     if ($row = mysqli_fetch_assoc($result)) {
       var_dump($result);
+      $pwd_Check = password_verify($password, $row["password"]);
+
+
       if ($pwd_Check == false) {
-        header("Location: ../index.php/?error=wrongPassword");
+        header("Location: ../login.php?error=wrongPassword");
         exit();
       } elseif ($pwd_Check == true) {
         session_start();
         $_SESSION['userid'] = $row['id'];
         $_SESSION['username'] = $row['username'];
 
-        header("Location: ../index.php/?login=loginSuccess");
+        $userLogged = true;
+        $_SESSION["userLogged"] = $userLogged;
+ 
+        header("Location: ../index.php?login=loginSuccess");
         exit();
       } else {
-        header("Location: ../index.php/?error=wrongPassword");
+        header("Location: ../login.php?error=wrongPassword");
         exit();
       }
     } else {
-      header("Location: ../index.php/?error=noUser");
+      header("Location: ../login.php?error=noUser");
       exit();
     }
   }
 } else {
-  header("Location: ../index.php");
+  header("Location: ../login.php");
   exit();
 }
