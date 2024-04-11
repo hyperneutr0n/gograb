@@ -1,5 +1,6 @@
 <?php
 require "dbconn.inc.php";
+include "cryptographic.inc.php";
 
 session_start();
 function generateID()
@@ -65,7 +66,7 @@ if (isset($_POST['register-submit'])) {
             } else {
                 //sedkit beda dari video e soalnya rada bingung di awal buatanmu
                 //kok langsung hashpass, tapi haruse jalan 
-                $hashpass = password_hash($password, PASSWORD_DEFAULT);
+                $hashpass = PasswordHash($password);
                 $sql = "INSERT INTO customers(id, username, password, nama, email, no_telp,saldo,points) VALUES(?,?,?,?,?,?,?,?)";
                 $stmt = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
