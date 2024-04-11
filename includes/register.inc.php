@@ -10,6 +10,13 @@ function generateID()
     return $id;
 }
 
+function generateIDKey()
+{
+    $currdate = date("YmdHis");
+    $id = "CSTKEY" . $currdate;
+    return $id;
+}
+
 
 if (isset($_POST['register-submit'])) {
     $id =  generateID();
@@ -68,25 +75,38 @@ if (isset($_POST['register-submit'])) {
                 //kok langsung hashpass, tapi haruse jalan 
                 $hashpass = PasswordHash($password);
                 $sql = "INSERT INTO customers(id, username, password, nama, email, no_telp,saldo,points) VALUES(?,?,?,?,?,?,?,?)";
+                $sql2 = "INSERT INTO keyCustomers(id,customers_id, encryptionkey) VALUES(?,?,?)";
                 $stmt = mysqli_stmt_init($conn);
+                $stmt2 = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
                     //error handling
                     header("Location: ../register.php?error=sqlerror");
                     exit();
+                } else if (!mysqli_stmt_prepare($stmt2, $sql2)) {
+                    header("Location: ../register.php?error=sqlerror");
+                    exit();
                 } else {
                     //bind param
-                    $zero= 0;
-                    mysqli_stmt_bind_param($stmt, "ssssssss", $id, $username, $hashpass, $fullname, $email, $mobilenumber,$zero,$zero);
+                    $key = GenerateKey();
+                    $encryptedID = DataEncrypt($id, $key);
+                    $idKey = generateIDKey();
+
+                    $zero = 0;
+                    mysqli_stmt_bind_param($stmt, "ssssssss", $encryptedID, $username, $hashpass, $fullname, $email, $mobilenumber, $zero, $zero);
                     mysqli_stmt_execute($stmt);
+
+                    mysqli_stmt_bind_param($stmt2, "sss", $idKey,  $encryptedID, $key);
+                    mysqli_stmt_execute($stmt2);
+
+
                     header("Location: ../register.php?register=success");
-                    $userLogged = true;
-                    $_SESSION["userLogged"] = $userLogged;
                     exit();
                 }
             }
         }
     }
     mysqli_stmt_close($stmt);
+    mysqli_stmt_close($stmt2);
     mysqli_close($conn);
 } else {
     header("Location: ../register.php?error=sqlerror");
