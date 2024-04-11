@@ -1,4 +1,6 @@
 <?php
+
+include "cryptographic.inc.php";
 //pengecekan agar user ga bisa sembarang buka login.php
 if (isset($_POST["login-submit"])) {
   require 'dbconn.inc.php';
@@ -17,7 +19,8 @@ if (isset($_POST["login-submit"])) {
     $result = mysqli_stmt_get_result($stmt);
     if ($row = mysqli_fetch_assoc($result)) {
       var_dump($result);
-      $pwd_Check = password_verify($password, $row["password"]);
+
+      $pwd_Check = PasswordVerify($password, $row["password"]);
 
 
       if ($pwd_Check == false) {
