@@ -31,7 +31,7 @@
                         Account
                         </button>
                         <div class="dropdown-menu dropdown-menu-right bg-light" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Personal Information</a>
+                          <a class="dropdown-item" href="accountdetails.php">Personal Information</a>
                           <form action = "includes/logout.inc.php" method = "POST">
                           <a class="dropdown-item" href = "logout.php">Logout</a>
                           </form>
