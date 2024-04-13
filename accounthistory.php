@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoGrab Account History</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <h2 class="text-center mb-4">GoGrab Account History</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Ride</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Distance</th>
+              <th>Duration</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2024-04-01</td>
+              <td>GoGrab Ride - Home to Work</td>
+              <td>123 Main St, City A</td>
+              <td>456 Elm St, City B</td>
+              <td>8 miles</td>
+              <td>30 minutes</td>
+              <td>$15.00</td>
+            </tr>
+            <tr>
+              <td>2024-03-28</td>
+              <td>GoGrab Ride - Work to Home</td>
+              <td>456 Elm St, City B</td>
+              <td>123 Main St, City A</td>
+              <td>8 miles</td>
+              <td>30 minutes</td>
+              <td>$12.00</td>
+            </tr>
+            <tr>
+              <td>2024-03-25</td>
+              <td>GoGrab Ride - Airport Transfer</td>
+              <td>789 Airport Blvd</td>
+              <td>123 Main St, City A</td>
+              <td>15 miles</td>
+              <td>45 minutes</td>
+              <td>$25.00</td>
+            </tr>
+            <!-- Add more rows as needed -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
