@@ -5,6 +5,7 @@ if(isset($_POST["order-submit"])){
     $pickup =  $_POST["pickup"];
     $destination =  $_POST["destination"];
     $distance = $_POST["distance"];
+    $price = $_POST["price"];
 }else{
 }
 
@@ -24,5 +25,6 @@ if(isset($_POST["order-submit"])){
     <p>Pickup Location: <?php echo $pickup; ?></p>
     <p>Destination: <?php echo $destination; ?></p>
     <p>Distance: <?php echo $distance; ?> km</p>
+    <p>Price: <?php echo $price; ?> km</p>
 </body>
 </html>

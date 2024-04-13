@@ -1,6 +1,9 @@
 <?php
 session_start();
+include "includes/layanan.inc.php";
 $userLogged = $_SESSION["userLogged"];
+
+$layanans = $_SESSION["layanans"];
 
 if ($userLogged) {
     require "header.php";
@@ -27,10 +30,17 @@ if ($userLogged) {
             </div>
             <div>
                 <label for="selectLayanan">Layanan:</label>
-                <select name="selectLayanan" id="selectLayanan">
-                    <?php echo include "layanan.inc.php"; ?>
-                </select>
+                <?php if (!empty($layanans)) : ?>
+                    <select name="selectLayanan" id="selectLayanan">
+                        <?php foreach ($layanans as $layanan) : ?>
+                            <option value="<?= $layanan["jenis"] ?>" id="<?= $layanan["tarif"] ?>"><?= $layanan["jenis"] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php else : ?>
+                    <p>No layanans available</p>
+                <?php endif; ?>
             </div>
+            <label id="labelHarga"></label>
             <button type="submit" name="search-submit" class="btn btn-lg btn-block" style="color: white;background-color: black;">Search</button>
         </div>
         </div>
@@ -40,7 +50,7 @@ if ($userLogged) {
             <input type="hidden" id="pickup" name="pickup">
             <input type="hidden" id="destination" name="destination">
             <input type="hidden" id="distance" name="distance">
-            <!-- <input type="hidden" id="priceLabel" name="priceLabel"> -->
+            <input type="hidden" id="price" name="price">
             <button type="submit" name="order-submit" class="btn btn-lg btn-block mt-2 mb-4" style="color: white;background-color: black;">Order</button>
         </form>
     </div>
@@ -83,10 +93,32 @@ if ($userLogged) {
                 var distance = calculateDistance(pickupCoordinates, destinationCoordinates) / 1000;
                 console.log('Distance: ' + distance + ' km');
 
+                var selectedElement = document.getElementById("selectLayanan");
+
+                var selectedOption = selectedElement.options[selectedElement.selectedIndex];
+
+                var selectedOptionID = selectedOption.id;
+                var selectedOptionValue = selectedOption.value;
+
+                var price = selectedOptionID * Math.round(distance);    
+
+                var labelHarga =document.getElementById("labelHarga");
+
+                labelHarga.textContent = "Total: Rp" + price;
+
+
+
+
+
+
+
+
+
                 //update hidden inputs 
                 document.getElementById('pickup').value = pickupLocation;
                 document.getElementById('destination').value = destination;
                 document.getElementById('distance').value = distance;
+                document.getElementById('price').value = price;
             });
         });
     });

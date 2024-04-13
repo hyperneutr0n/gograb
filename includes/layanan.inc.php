@@ -1,13 +1,20 @@
 <?php
+
+$arraylayanans = array();
 include "dbconn.inc.php";
 
-$sql = "SELECT jenis FROM layanans";
+$sql = "SELECT jenis,tarif FROM layanans";
 $stmt = mysqli_query($conn, $sql);
 
 if ($stmt) {
   while ($row = mysqli_fetch_array($stmt)) {
-    echo "<option>" . $row[0] . "</option>";
+    $arraylayanans[] = array(
+      "jenis" => $row["jenis"],
+      "tarif" => $row["tarif"]
+    );
   }
+
+$_SESSION["layanans"] = $arraylayanans;
 } else {
   // Handle error
   echo "<option>No data available</option>";
