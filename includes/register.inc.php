@@ -71,8 +71,6 @@ if (isset($_POST['register-submit'])) {
                     "&mobile=" . $mobilenumber);
                 exit();
             } else {
-                //sedkit beda dari video e soalnya rada bingung di awal buatanmu
-                //kok langsung hashpass, tapi haruse jalan 
                 $hashpass = PasswordHash($password);
                 $sql = "INSERT INTO customers(id, username, password, nama, email, no_telp,saldo,points) VALUES(?,?,?,?,?,?,?,?)";
                 $sql2 = "INSERT INTO keyCustomers(id,customers_id, encryptionkey) VALUES(?,?,?)";
@@ -105,10 +103,10 @@ if (isset($_POST['register-submit'])) {
             }
         }
     }
+} else {
     mysqli_stmt_close($stmt);
     mysqli_stmt_close($stmt2);
     mysqli_close($conn);
-} else {
     header("Location: ../register.php?error=sqlerror");
     exit();
 }

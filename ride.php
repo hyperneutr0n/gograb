@@ -25,6 +25,12 @@ if ($userLogged) {
                 <label for="destination">Destination</label>
                 <input type="text" class="form-control" id="destination_location" name="destination" placeholder="Enter destination">
             </div>
+            <div>
+                <label for="selectLayanan">Layanan:</label>
+                <select name="selectLayanan" id="selectLayanan">
+                    <?php echo include "layanan.inc.php"; ?>
+                </select>
+            </div>
             <button type="submit" name="search-submit" class="btn btn-lg btn-block" style="color: white;background-color: black;">Search</button>
         </div>
         </div>
@@ -34,6 +40,7 @@ if ($userLogged) {
             <input type="hidden" id="pickup" name="pickup">
             <input type="hidden" id="destination" name="destination">
             <input type="hidden" id="distance" name="distance">
+            <!-- <input type="hidden" id="priceLabel" name="priceLabel"> -->
             <button type="submit" name="order-submit" class="btn btn-lg btn-block mt-2 mb-4" style="color: white;background-color: black;">Order</button>
         </form>
     </div>
@@ -75,6 +82,8 @@ if ($userLogged) {
                 // Calculate distance between pickup and destination
                 var distance = calculateDistance(pickupCoordinates, destinationCoordinates) / 1000;
                 console.log('Distance: ' + distance + ' km');
+
+                //update hidden inputs 
                 document.getElementById('pickup').value = pickupLocation;
                 document.getElementById('destination').value = destination;
                 document.getElementById('distance').value = distance;
