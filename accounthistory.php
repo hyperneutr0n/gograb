@@ -1,4 +1,19 @@
-<div class="container mt-5">
+<?php require "header.php";
+session_start();
+$userLogged = $_SESSION["userLogged"];
+
+
+if ($userLogged) { //SESSION berfungsi untuk store data dan bisa digunakan cross website tanpa session $userLogged masih bisa diakses di sini tanpa di redeclare, session berguna hnya utk manipulasi data
+    require "header.php";
+} else {
+    $userLogged = false;
+    $_SESSION["userLogged"] = $userLogged;
+    header("Location: login.php");
+
+
+} ?>
+
+<div class="container container-login">
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <h2 class="text-center mb-4">GoGrab Account History</h2>
@@ -49,10 +64,4 @@
     </div>
 </div>
 
-<!-- Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+<?php require "footer.php"?>
