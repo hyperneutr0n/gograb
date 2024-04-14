@@ -9,6 +9,12 @@ function generateID()
     $id = "INVGGRB" . $currdate;
     return $id;
 }
+function generateIDKey()
+{
+    $currdate = date("YmdHis");
+    $id = "ORDKEY" . $currdate;
+    return $id;
+}
 
 $customerID = $_SESSION["id"];
 
@@ -36,6 +42,8 @@ if (isset($_POST["order-submit"])) {
     $driverID;
     $adminID;
     $layananID;
+    $encryptionKey =  GenerateKey();
+
 
     $sqlFindRandomDriver = "SELECT * FROM drivers ORDER BY RAND() LIMIT 1";
     $stmt2 = mysqli_query($conn, $sqlFindRandomDriver);
@@ -70,15 +78,26 @@ if (isset($_POST["order-submit"])) {
         exit();
     } else {
         $invoiceID =  generateID();
+        $encryptedID = DataEncrypt($invoiceID, $encryptionKey);
         $zero = 0;
         $currdate = date("YmdHis");
-        mysqli_stmt_bind_param($stmt, "sssssssssssss", $invoiceID, $tarif, $currdate, $price, $pickup, $destination, $zero, $payment_method, $notes, $customerID, $driverID, $adminID, $layananID);
+        mysqli_stmt_bind_param($stmt, "sssssssssssss", $encryptedID, $tarif, $currdate, $price, $pickup, $destination, $zero, $payment_method, $notes, $customerID, $driverID, $adminID, $layananID);
         // Execute the SQL query
         if (mysqli_stmt_execute($stmt)) {
-            // Query executed successfully
-            // Redirect to a success page or perform any additional actions
-            header("Location: ../index.php");
-            exit();
+            $keyOrderID = generateIDKey();
+            $sqlKey = "INSERT into keyOrders(id,orders_id, encryptionkey) VALUES('$keyOrderID','$encryptedID', '$encryptionKey')";
+
+            $stmtSqlKey =  mysqli_query($conn, $sqlKey);
+
+            if ($stmtSqlKey) {
+                // Query executed successfully
+                // Redirect to a success page or perform any additional actions
+                header("Location: ../index.php");
+                exit();
+            }
+            else{
+                echo "Error " . mysqli_error($conn);
+            }
         } else {
             // Query execution failed
             // Print out the error message for debugging
