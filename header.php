@@ -15,7 +15,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: black;"> <!-- menggunakan class navbar dari bootstrap, navbar-expand-md itu berarti sampai screen berada di size medium navbar akan expand, navbar-dark untuk fontnya, bg itu background-->
-            <a class="navbar-brand ml-5" href="#">GoGrab</a>
+            <a class="navbar-brand ml-5" href="index.php">GoGrab</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> <!-- intinya ini utk collapse semisal screen sizenya dibawah medium, yang penting itu class navbar-toggler dan data target, datatargetnya menjadi id di div class agar jika kondisi terpenuhi akan collapse -->
                 <span class="navbar-toggler-icon"></span><!--  katanya chatgpt ini placeholder but this is literally an icon -->
             </button>
@@ -31,8 +31,9 @@
                         Account
                         </button>
                         <div class="dropdown-menu dropdown-menu-right bg-light" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="accountdetails.php">Personal Information</a>
+                          <a class="dropdown-item" href="includes/accountdetails.inc.php">Personal Information</a>
                           <form action = "includes/logout.inc.php" method = "POST">
+                          <a class = "dropdown-item" href ="includes/accounthistory.inc.php"> History </a>
                           <a class="dropdown-item" href = "logout.php">Logout</a>
                           </form>
                         </div>

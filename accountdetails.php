@@ -12,14 +12,21 @@ if ($userLogged) { //SESSION berfungsi untuk store data dan bisa digunakan cross
 }
 $showPasswordFields = false;
 $editButtonVisible = true;
+$access = "disabled";
 if (isset($_POST["edit"])) {
     $showPasswordFields = true;
     $editButtonVisible = false;
+    $access = "";
 }
 if (isset($_POST['cancel'])) {
     $showPasswordFields = false;
     $editButtonVisible = true;
 }
+
+
+$customerdetails =  $_SESSION["customerDetails"];
+
+
 
 ?>
 
@@ -29,27 +36,33 @@ if (isset($_POST['cancel'])) {
             <h2 class="text-center mb-4">Account Details</h2>
             <form method="post" action="">
                 <div class="form-group">
+                    <label for="id">
+                        ID:
+                    </label>
+                    <input type="text" class="form-control" id="id" value="<?=$customerdetails["id"];?>" disabled>
+                </div>
+                <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" value="JohnDoe123" readonly>
+                    <input type="text" class="form-control" id="username" value="<?=$customerdetails["username"];?>" disabled>
                 </div>
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" value="johndoe@example.com">
+                    <input type="email" class="form-control" id="email" value="<?=$customerdetails["email"];?>" <?=$access?>>
                 </div>
                 <div class="form-group">
                     <label for="fullName">Full Name</label>
-                    <input type="text" class="form-control" id="fullName" value="John Doe">
+                    <input type="text" class="form-control" id="fullName" value="<?=$customerdetails["nama"];?>" <?=$access?>>
                 </div>
                 <div class="form-group">
-                    <label for="dob">Date of Birth</label>
-                    <input type="date" class="form-control" id="dob" value="2024-01-01">
+                    <label for="nomor_telp">Nomor Telp:</label>
+                    <div class="input-group-prepend">
+                    <span class="input-group-text">+62</span>
+                    <input type="text" class="form-control" id="no_telp" value="<?=$customerdetails["no_telp"];?>" <?=$access?>>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="gender">Gender</label>
-                    <select class="form-control" id="gender">
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
+                    <label for="">Saldo: </label>
+                    <label for="saldo">Rp.<?=$customerdetails["saldo"];?></label>
                     </select>
                 </div>
                 <?php if ($showPasswordFields) : ?>
@@ -65,7 +78,7 @@ if (isset($_POST['cancel'])) {
                     <button type="submit" name="cancel" class="btn btn-secondary mb-4">Cancel</button>
                 <?php endif; ?>
             </form>
-            <form method = "POST" action = "">
+            <form method="POST" action="">
                 <?php if ($editButtonVisible) : ?>
                     <button type="submit" name="edit" class="btn btn-primary mb-4">Edit</button>
                 <?php endif; ?>

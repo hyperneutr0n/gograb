@@ -40,6 +40,18 @@ if ($userLogged) {
                     <p>No layanans available</p>
                 <?php endif; ?>
             </div>
+            <div>
+                <label for="">Payment:</label>
+                <select name = "selectedPayment" id = "selectedPayment">
+                    <option value="Cash" id = "Cash">Cash</option>
+                    <option value="E-wallet" id = "E-wallet">E-wallet</option>
+                </select>
+            </div>
+            <div class = "form-group">
+                <label for="">Notes:</label>
+                <input type="text" id = "notesfill" name = "notesfill" placeholder ="Add notes..">
+
+            </div>
             <label id="labelHarga"></label>
             <button type="submit" name="search-submit" class="btn btn-lg btn-block" style="color: white;background-color: black;">Search</button>
         </div>
@@ -51,6 +63,10 @@ if ($userLogged) {
             <input type="hidden" id="destination" name="destination">
             <input type="hidden" id="distance" name="distance">
             <input type="hidden" id="price" name="price">
+            <input type="hidden" id="tarif" name="tarif">
+            <input type="hidden" id="jenis" name="jenis">
+            <input type="hidden" id="payment_method" name="payment_method">
+            <input type="hidden" id="notes" name="notes">
             <button type="submit" name="order-submit" class="btn btn-lg btn-block mt-2 mb-4" style="color: white;background-color: black;">Order</button>
         </form>
     </div>
@@ -93,14 +109,21 @@ if ($userLogged) {
                 var distance = calculateDistance(pickupCoordinates, destinationCoordinates) / 1000;
                 console.log('Distance: ' + distance + ' km');
 
+                var notes = document.getElementById("notesfill").value;
+                console.log(notes);
+
                 var selectedElement = document.getElementById("selectLayanan");
-
                 var selectedOption = selectedElement.options[selectedElement.selectedIndex];
-
                 var selectedOptionID = selectedOption.id;
                 var selectedOptionValue = selectedOption.value;
 
-                var price = selectedOptionID * Math.round(distance);    
+
+                var selectedPayment =  document.getElementById("selectedPayment");
+                var selectedPaymentOption =selectedPayment.options[selectedPayment.selectedIndex];
+                var selectedPaymentOptionValue = selectedPaymentOption.value;
+
+
+                var price = selectedOptionID * Math.round(distance);        
 
                 var labelHarga =document.getElementById("labelHarga");
 
@@ -115,10 +138,14 @@ if ($userLogged) {
 
 
                 //update hidden inputs 
+                document.getElementById('tarif').value =selectedOptionID;
+                document.getElementById('notes').value =notes;
                 document.getElementById('pickup').value = pickupLocation;
                 document.getElementById('destination').value = destination;
                 document.getElementById('distance').value = distance;
                 document.getElementById('price').value = price;
+                document.getElementById('jenis').value = selectedOptionValue;
+                document.getElementById('payment_method').value = selectedPaymentOptionValue;
             });
         });
     });

@@ -13,13 +13,14 @@ if ($userLogged) { //SESSION berfungsi untuk store data dan bisa digunakan cross
 
 } ?>
 
-<div class="container container-login">
+<div class="container xcontainer-login">
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <h2 class="text-center mb-4">GoGrab Account History</h2>
             <table class="table">
                 <thead>
                     <tr>
+                        <th> Invoice </th>
                         <th>Date</th>
                         <th>Ride</th>
                         <th>From</th>
