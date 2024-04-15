@@ -1,5 +1,5 @@
-       <div class="container container-login bg-light"> <!-- class dr css biar tampilan nya turun dikit -->
-           <p>Driver Register</p>
+<div class="container container-login bg-light"> <!-- class dr css biar tampilan nya turun dikit -->
+           <p>Admin Register</p>
            <div class="row"><!-- buat baris yang diisi kolom intinya smua nya nnti posisi e dlm 1 baris -->
                <div class="col"> <!-- isi kolom pertama -->
                    <p style="text-align:left">Full Name:</p>
@@ -28,24 +28,6 @@
                            <span class="input-group-text">+62</span>
                        </div>
                        <input type="text" class="form-control" name="mobilenumber" placeholder="xxxx-xxxx-xxxx" required>
-                   </div>
-               </div>
-           </div>
-           <div class="row">
-               <div class="col">
-                   <p style="text-align:left">Vehicle Registration Plate:</p>
-                   <div class="form-group justify-content-center">
-                       <input type="text" name="vehicle_plate" class="form-control" placeholder="Vehicle Registration Plate" required>
-                   </div>
-               </div>
-               <div class="col">
-                   <p style="text-align:left">Vehicle Type:</p>
-                   <div class="form-group justify-content-center">
-                       <select name="vehicle_type" class="form-control" required>
-                           <option value="" disabled selected>- Select Vehicle Type -</option>
-                           <option value="Motor">Motor</option>
-                           <option value="Mobil">Mobil</option>
-                       </select>
                    </div>
                </div>
            </div>
