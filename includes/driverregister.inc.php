@@ -27,8 +27,8 @@ if (isset($_POST['register-submit'])) {
   $ktp = $_POST["ktp"];
   $password = $_POST["password"];
   $confirmpass = $_POST["confirm"];
-  $jenis_kendaraan = $_POST["jenis_kendaraan"];
-  $plat_nomor_kendaraan = $_POST["plat_nomor_kendaraan"];
+  $vehicle_type = $_POST["vehicle_type"];
+  $vehicle_plate = $_POST["vehicle_plate"];
 
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     header("Location: ../driverregister.php?error=invalidemail" .
@@ -96,9 +96,11 @@ if (isset($_POST['register-submit'])) {
         $stmt2 = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
           //error handling
+          echo "Kesalahan query: " . mysqli_stmt_error($stmt);
           header("Location: ../driverregister.php?error=sqlerror");
           exit();
         } else if (!mysqli_stmt_prepare($stmt2, $sql2)) {
+          $error_message = mysqli_stmt_error($stmt2);
           header("Location: ../driverregister.php?error=sqlerror");
           exit();
         } else {
@@ -107,7 +109,7 @@ if (isset($_POST['register-submit'])) {
           $encryptedID = DataEncrypt($id, $key);
           $idKey = generateIDKey();
           $zero = 0;
-          mysqli_stmt_bind_param($stmt, "ssssssssss", $encryptedID, $fullname, $username, $email, $hashpass, $zero, $mobilenumber, $ktp, $jenis_kendaraan, $plat_nomor_kendaraan);
+          mysqli_stmt_bind_param($stmt, "ssssssssss", $encryptedID, $fullname, $username, $email, $hashpass, $zero, $mobilenumber, $ktp, $vehicle_type, $vehicle_plate);
           mysqli_stmt_execute($stmt);
 
           mysqli_stmt_bind_param($stmt2, "sss", $idKey, $encryptedID, $key);

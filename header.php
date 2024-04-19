@@ -33,7 +33,7 @@
                         <div class="dropdown-menu dropdown-menu-right bg-light" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="includes/accountdetails.inc.php">Personal Information</a>
                           <form action = "includes/logout.inc.php" method = "POST">
-                          <a class = "dropdown-item" href ="includes/accounthistory.inc.php"> History </a>
+                          <a class = "dropdown-item" href ="includes/accounthistory.php"> History </a>
                           <a class="dropdown-item" href = "logout.php">Logout</a>
                           </form>
                         </div>
