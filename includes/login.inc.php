@@ -40,7 +40,7 @@ if (isset($_POST["login-submit"])) {
 
 
 
-        $_SESSION['userid'] = $row['id'];
+        $_SESSION['userid'] = $row['id']; 
         $_SESSION['username'] = $row['username'];
 
         $userLogged = true;
