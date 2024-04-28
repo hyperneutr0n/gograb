@@ -85,6 +85,13 @@ if (isset($_POST['register-submit'])) {
         } else if (!mysqli_stmt_prepare($stmt2, $sql2)) {
           header("Location: ../register.php?error=sqlerror");
           exit();
+        }  else if (!preg_match("/^[0-9]{16}$/", $ktp)) {
+          header("Location: ../register.php?error=invalidktp" .
+            "&fullname=" . $fullname .
+            "&username=" . $username .
+            "&email=" . $email .
+            "&mobile=" . $mobilenumber);
+          exit();
         } else {
           //bind param
           $key = GenerateKey();
