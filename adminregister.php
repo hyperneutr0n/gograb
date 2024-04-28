@@ -1,4 +1,5 @@
 <?php
+$userLogged = false;
 require "header.php";
 ?>
 

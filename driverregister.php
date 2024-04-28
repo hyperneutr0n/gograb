@@ -1,4 +1,6 @@
 <?php
+$userLogged =false;
+
 require "header.php";
 ?>
 <main>
@@ -48,8 +50,8 @@ require "header.php";
                     <div class="form-group justify-content-center">
                         <select name="vehicle_type" class="form-control" required>
                             <option value="" disabled selected>- Select Vehicle Type -</option>
-                            <option value="Motor">Motor</option>
-                            <option value="Mobil">Mobil</option>
+                            <option value="Bike">Bike</option>
+                            <option value="Car">Car</option>
                         </select>
                     </div>
                 </div>

@@ -45,7 +45,7 @@ if (isset($_POST["order-submit"])) {
     $encryptionKey =  GenerateKey();
 
 
-    $sqlFindRandomDriver = "SELECT * FROM drivers ORDER BY RAND() LIMIT 1";
+    $sqlFindRandomDriver = "SELECT * FROM drivers WHERE jenis_kendaraan = '$jenis' ORDER BY RAND() LIMIT 1";
     $stmt2 = mysqli_query($conn, $sqlFindRandomDriver);
     if ($stmt2) {
         $driverRow = mysqli_fetch_assoc($stmt2);
@@ -59,11 +59,26 @@ if (isset($_POST["order-submit"])) {
         $adminID = $adminRow["id"];
     }
 
-    $sqlLayanan = "SELECT * FROM layanans WHERE jenis='$jenis'";
-    $stmt4 =  mysqli_query($conn, $sqlLayanan);
-    if ($stmt4) {
-        $layananRow = mysqli_fetch_assoc($stmt4);
-        $layananID = $layananRow["id"];
+    $sqlLayanan = "SELECT * FROM layanans WHERE jenis=?";
+    $stmt4 =  mysqli_stmt_init($conn);
+
+
+
+    if (mysqli_stmt_prepare($stmt4, $sqlLayanan)) {
+
+        mysqli_stmt_bind_param($stmt4, "s", $jenis);
+        mysqli_stmt_execute($stmt4);
+        $resultLayanan = mysqli_stmt_get_result($stmt4);
+
+        if ($resultLayanan) {
+
+            $layananRow = mysqli_fetch_assoc($resultLayanan);
+            $layananID = $layananRow["id"];
+        } else {
+            echo "Error " . mysqli_error($conn);
+        }
+    } else {
+        header("Location: ../ride.php?error");
     }
 
     // Debug: Print out the values of variables to check their content
@@ -81,21 +96,28 @@ if (isset($_POST["order-submit"])) {
         $encryptedID = DataEncrypt($invoiceID, $encryptionKey);
         $zero = 0;
         $currdate = date("YmdHis");
-        mysqli_stmt_bind_param($stmt, "sssssssssssss", $encryptedID, $tarif, $currdate, $price, $pickup, $destination, $zero, $payment_method, $notes, $customerID, $driverID, $adminID, $layananID);
+        $encryptedPickup = DataEncrypt($pickup, $encryptionKey);
+        $encryptedDestination = DataEncrypt($destination,$encryptionKey);
+
+
+        mysqli_stmt_bind_param($stmt, "sssssssssssss", $encryptedID, $tarif, $currdate, $price, $encryptedPickup, $encryptedDestination, $zero, $payment_method, $notes, $customerID, $driverID, $adminID, $layananID);
         // Execute the SQL query
         if (mysqli_stmt_execute($stmt)) {
             $keyOrderID = generateIDKey();
-            $sqlKey = "INSERT into keyOrders(id,orders_id, encryptionkey) VALUES('$keyOrderID','$encryptedID', '$encryptionKey')";
+            $sqlKey = "INSERT into keyOrders(id,orders_id, encryptionkey) VALUES(?,?,?)";
+            //('$keyOrderID','$encryptedID', '$encryptionKey')";
 
-            $stmtSqlKey =  mysqli_query($conn, $sqlKey);
+            $stmtSqlKey =  mysqli_stmt_init($conn);
 
-            if ($stmtSqlKey) {
+            if (mysqli_stmt_prepare($stmtSqlKey, $sqlKey)) {
                 // Query executed successfully
                 // Redirect to a success page or perform any additional actions
-                header("Location: ../index.php");
-                exit();
-            }
-            else{
+                mysqli_stmt_bind_param($stmtSqlKey, "sss", $keyOrderID, $encryptedID, $encryptionKey);
+                mysqli_stmt_execute($stmtSqlKey);
+
+                header("Location:../index.php");
+
+            } else {
                 echo "Error " . mysqli_error($conn);
             }
         } else {

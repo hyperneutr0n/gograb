@@ -63,19 +63,11 @@ if (isset($_POST['register-submit'])) {
       "&mobile=" . $mobilenumber .
       "&ktp=" . $ktp);
     exit();
-  } elseif (!preg_match("/^[A-Z]{1,2}\s{1}\d{1,4}\s{1}[A-Z]{1,3}$/", $plat_nomor_kendaraan)) {
-    header("Location: ../driverregister.php?error=invalidplatnumber" .
-      "&fullname=" . $fullname .
-      "&username=" . $username .
-      "&email=" . $email .
-      "&mobile=" . $mobilenumber .
-      "&ktp=" . $ktp);
-    exit();
   } else {
     $sql = "SELECT username FROM drivers WHERE username=?";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-      header("Location: ../driverregister.php?error=sqlerror");
+      header("Location: ../driverregister.php?error=sqlerrorSelect");
       exit();
     } else {
       mysqli_stmt_bind_param($stmt, "s",  $username);
@@ -91,17 +83,17 @@ if (isset($_POST['register-submit'])) {
       } else {
         $hashpass = PasswordHash($password);
         $sql = "INSERT INTO drivers(id, nama, username, email, password, saldo, nomor_telp, nomor_ktp, jenis_kendaraan, plat_nomor_kendaraan) VALUES(?,?,?,?,?,?,?,?,?,?)";
-        $sql2 = "INSERT INTO keydrivers(id, driver_id, encryptionkey) VALUES(?,?,?)";
+        $sql2 = "INSERT INTO keydrivers(id, drivers_id, encryptionkey) VALUES(?,?,?)";
         $stmt = mysqli_stmt_init($conn);
         $stmt2 = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
           //error handling
           echo "Kesalahan query: " . mysqli_stmt_error($stmt);
-          header("Location: ../driverregister.php?error=sqlerror");
+          header("Location: ../driverregister.php?error=sqlerrorInsertDriver");
           exit();
         } else if (!mysqli_stmt_prepare($stmt2, $sql2)) {
           $error_message = mysqli_stmt_error($stmt2);
-          header("Location: ../driverregister.php?error=sqlerror");
+          header("Location: ../driverregister.php?error=sqlerrorInsertKey" . mysqli_error($conn));
           exit();
         } else {
           //bind param
@@ -125,6 +117,6 @@ if (isset($_POST['register-submit'])) {
   mysqli_stmt_close($stmt);
   mysqli_stmt_close($stmt2);
   mysqli_close($conn);
-  header("Location: ../driverregister.php?error=sqlerror");
+  header("Location: ../driverregister.php?error=sqlerror" . mysqli_error($conn));
   exit();
 }

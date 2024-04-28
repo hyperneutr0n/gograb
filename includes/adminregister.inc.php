@@ -47,13 +47,6 @@ if (isset($_POST['register-submit'])) {
       "&username=" . $username .
       "&email=" . $email);
     exit();
-  } else if (!preg_match("/^[0-9]{16}$/", $ktp)) {
-    header("Location: ../register.php?error=invalidktp" .
-      "&fullname=" . $fullname .
-      "&username=" . $username .
-      "&email=" . $email .
-      "&mobile=" . $mobilenumber);
-    exit();
   } else if ($password != $confirmpass) {
     header("Location: ../register.php?error=invalidemail" .
       "&fullname=" . $fullname .
@@ -98,10 +91,10 @@ if (isset($_POST['register-submit'])) {
           $encryptedID = DataEncrypt($id, $key);
           $idKey = generateIDKey();
 
-          mysqli_stmt_bind_param($stmt, "sssssss", $id, $username, $hashpass, $fullname, $email, $mobilenumber, $ktp);
+          mysqli_stmt_bind_param($stmt, "sssssss", $encryptedID, $username, $hashpass, $fullname, $email, $mobilenumber, $ktp);
           mysqli_stmt_execute($stmt);
 
-          mysqli_stmt_bind_param($stmt2, "sss", $idKey, $id, $key);
+          mysqli_stmt_bind_param($stmt2, "sss", $idKey, $encryptedID, $key);
           mysqli_stmt_execute($stmt2);
 
           header("Location: ../register.php?register=success");
