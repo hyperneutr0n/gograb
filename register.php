@@ -9,9 +9,11 @@ if (isset($_SESSION["userLogged"]) && $_SESSION["userLogged"]== true) {
 ?>
 <main>
     <form method="post" action="includes/register.inc.php" class="text-center">
-        <div class="container container-login bg-light"> <!-- class dr css biar tampilan nya turun dikit -->
+        <div class="container container-login bg-light"> 
+            <!-- class dr css biar tampilan nya turun dikit -->
             <p>Register</p>
-            <div class="row"><!-- buat baris yang diisi kolom intinya smua nya nnti posisi e dlm 1 baris -->
+            <div class="row">
+                <!-- buat baris yang diisi kolom intinya smua nya nnti posisi e dlm 1 baris -->
                 <div class="col"> <!-- isi kolom pertama -->
                     <p style="text-align:left">Full Name:</p>
                     <div class="form-group justify-content-center">
