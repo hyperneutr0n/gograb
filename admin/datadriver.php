@@ -20,9 +20,6 @@ while ($row = $result->fetch_assoc()) {
 }
 $driver_data = array();
 
-echo $driver_key[0]["drivers_id"] . "<br/>";
-echo $driver_key[0]["encryptionkey"] . "<br/>";
-
 for ($i = 0; $i < count($driver_key); $i++) {
 
   $sql2 = "SELECT * FROM drivers WHERE id=?";
@@ -38,7 +35,7 @@ for ($i = 0; $i < count($driver_key); $i++) {
       $decryptedID = DataDecrypt($row["id"], $driver_key[$i]['encryptionkey']);
       $decryptedNoTelp = DataDecrypt($row["nomor_telp"], $driver_key[$i]['encryptionkey']);
       $decryptedNoKTP = DataDecrypt($row["nomor_ktp"], $driver_key[$i]['encryptionkey']);
-
+      
       $driver_detail = array(
         "id" => $decryptedID,
         "nama" => $row["nama"],
@@ -66,8 +63,9 @@ for ($i = 0; $i < count($driver_key); $i++) {
 </head>
 
 <body>
-  <h2>Data Driver</h2>
   <div class="container mt-5">
+    <br>
+    <br>
     <h2>Data Driver</h2>
     <table class="table">
       <thead>

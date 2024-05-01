@@ -60,6 +60,8 @@ for ($i = 0; $i < count($customer_key); $i++) {
 
 <body>
   <div class="container mt-5">
+    <br>
+    <br>
     <h2>Data Customer</h2>
     <table class="table">
       <thead>
