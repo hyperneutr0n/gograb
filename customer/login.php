@@ -1,5 +1,6 @@
 <?php
-if (isset($_SESSION["userLogged"]) && $_SESSION["userLogged"]== true) {
+session_start();
+if (isset($_SESSION["userLogged"]) && $_SESSION["userLogged"] == true) {
     header("Location: index.php");
     exit();
 } else {
@@ -14,9 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["username"]) && isset($_POST["password"])) {
         // insert pengecekan database here sementara lsg ubah jadi true
 
-        $userLogged = true;
+        $driverLogged = true;
 
-        $_SESSION['userLogged'] = $userLogged;
+        $_SESSION['driverLogged'] = $driverLogged;
 
         header("Location: index.php");
     }
@@ -45,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <div class="row justify-content-center">
-                <button type="submit" class="btn btn-primary" name = "login-submit">Login</button>
+                <button type="submit" class="btn btn-primary" name="login-submit">Login</button>
             </div>
             <div class="row mt-4"></div>
             <div class="row mt-4"></div>
