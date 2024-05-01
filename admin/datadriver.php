@@ -2,54 +2,44 @@
 session_start();
 if (isset($_SESSION["adminLogged"]) && $_SESSION["adminLogged"] == true) {
   $adminLogged = true;
-  require "header.php";
+  //require "header.php";
 } else {
   header("Location: login.php");
 }
 
 
 require "includes/dbconn.inc.php";
-include "includes/cryptographic.inc.php";
+require "includes/cryptographic.inc.php";
 
-$sql = "SELECT drivers_id, encryptionkey FROM keydrivers";
+$sql = "SELECT*FROM drivers";
+$stmt = mysqli_query($conn, $sql);
 
-$result = $conn->query($sql);
-$driver_key = array();
-while ($row = $result->fetch_assoc()) {
-  $driver_key[] = $row;
-}
-$driver_data = array();
 
-for ($i = 0; $i < count($driver_key); $i++) {
-
-  $sql2 = "SELECT * FROM drivers WHERE id=?";
-  $stmt2 = mysqli_stmt_init($conn);
-
-  if (mysqli_stmt_prepare($stmt2, $sql2)) {
-    mysqli_stmt_bind_param($stmt2, "s", $driver_key[$i]['drivers_id']);
-    mysqli_stmt_execute($stmt2);
-    $result2 = mysqli_stmt_get_result($stmt2);
-    if ($result2) {
-      $row = mysqli_fetch_assoc($result2);
-
-      $decryptedID = DataDecrypt($row["id"], $driver_key[$i]['encryptionkey']);
-      $decryptedNoTelp = DataDecrypt($row["nomor_telp"], $driver_key[$i]['encryptionkey']);
-      $decryptedNoKTP = DataDecrypt($row["nomor_ktp"], $driver_key[$i]['encryptionkey']);
-      
-      $driver_detail = array(
-        "id" => $decryptedID,
-        "nama" => $row["nama"],
-        "username" => $row["username"],
-        "email" => $row["email"],
-        "no_telp" => "+62-" . $decryptedNoTelp,
-        "no_ktp" => $decryptedNoKTP,
-        "type" => $row["jenis_kendaraan"],
-        "plate" => $row["plat_nomor_kendaraan"]
-      );
-      $driver_data[$i] = $driver_detail;
+if ($stmt) {
+  while ($rowDrivers = mysqli_fetch_assoc($stmt)) {
+    $sql2 = "SELECT*FROM keydrivers WHERE
+    drivers_id='{$rowDrivers['id']}'";
+    $stmt2 = mysqli_query($conn, $sql2);
+    if ($stmt2) {
+      $rowKey = mysqli_fetch_assoc($stmt2);
+      $encryptionKey = $rowKey["encryptionkey"];
     }
+
+    
+    $driver_detail[] = array(
+      "encryption_key" => $encryptionKey,
+      "id" => $rowDrivers["id"],
+      "nama" => $rowDrivers["nama"],
+      "username" => $rowDrivers["username"],
+      "email" => $rowDrivers["email"],
+      "notelp" => $rowDrivers["nomor_telp"],
+      "noktp" => $rowDrivers["nomor_ktp"],
+      "type" => $rowDrivers["jenis_kendaraan"],
+      "plate" => $rowDrivers["plat_nomor_kendaraan"]
+    );
   }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -82,13 +72,43 @@ for ($i = 0; $i < count($driver_key); $i++) {
       </thead>
       <tbody>
         <?php
-        for ($i = 0; $i < count($driver_data); $i++) {
+
+        foreach ($driver_detail as $drivers) {
           echo "<tr>";
-          foreach ($driver_data[$i] as $data) {
-            echo "<td>";
-            echo $data;
-            echo "</td>";
-          }
+
+          echo "<td>";
+          echo DataDecrypt($drivers['id'], $drivers["encryption_key"]);
+          echo "</td>";
+
+          echo "<td>";
+          echo $drivers["nama"];
+          echo "</td>";
+
+          echo "<td>";
+          echo $drivers["username"];
+          echo "</td>";
+
+          echo "<td>";
+          echo $drivers["email"];
+          echo "</td>";
+
+          echo "<td>";
+          echo DataDecrypt($drivers["notelp"], $drivers["encryption_key"]);
+          echo "</td>";
+
+          echo "<td>";
+          echo DataDecrypt($drivers["noktp"], $drivers["encryption_key"]);
+          echo "</td>";
+
+          echo "<td>";
+          echo $drivers["type"];
+          echo "</td>";
+
+          echo "<td>";
+          echo $drivers["plate"]; 
+          echo "</td>";
+
+
           echo "</tr>";
         }
         ?>
