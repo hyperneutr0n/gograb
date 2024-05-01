@@ -45,7 +45,7 @@ $historyTransaction = isset($_SESSION["historyTransaction"]) ? $_SESSION["histor
                                 <td>
                                     <input type="hidden" name="invoice_id" value="<?php echo $historyRow['encryptedID']; ?>">
                                     <button type="submit" name = "submit" class="btn btn-primary">See Receipt</button>
-                                    <!-- <button onclick="window.print()" class="btn btn-primary">print</button> -->
+                                    
                                 </td>
                             </tr>
                         </form>
