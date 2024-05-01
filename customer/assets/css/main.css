@@ -38,7 +38,7 @@ body {
 
 .content {
     flex: 1;
-    /* Grow to fill remaining vertical space */
+    margin: 80px;
 }
 
 .footer {
@@ -165,4 +165,16 @@ body {
 
 .app-icons a:hover::after {
     background-color: #ffffff;
+}
+
+.container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full viewport height */
+}
+.image {
+    flex: 1;
+    padding: 30px;
+    /* padding-left : 300px; */
 }

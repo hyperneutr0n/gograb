@@ -13,9 +13,9 @@ if ($userLogged) { //SESSION berfungsi untuk store data dan bisa digunakan cross
 }
 ?>
 <main>
-    <div class="container">
+<div class="container">
         <div class="image">
-            <img src="assets/homepic1.jpg" alt="Driver in car" width="800" height="400">
+            <img src="homepic1.jpg" alt="Driver in car" width="800" height="400">
         </div>
 
         <?php
@@ -31,6 +31,7 @@ if ($userLogged) { //SESSION berfungsi untuk store data dan bisa digunakan cross
         </div>
     </div>
     <div class="container">
+
         <?php
         $title = "Good to Go? Use our GoGrab app today!";
         ?>
@@ -39,7 +40,7 @@ if ($userLogged) { //SESSION berfungsi untuk store data dan bisa digunakan cross
         </div>
 
         <div class="image">
-            <img src="assets/homepic2.jpg" width="612" height="400">
+            <img src="homepic2.jpg" width="612" height="400">
         </div>
 
     </div>
