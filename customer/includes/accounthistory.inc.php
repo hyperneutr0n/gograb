@@ -33,6 +33,7 @@ if (isset($_SESSION["userLogged"]) && $_SESSION["userLogged"] == true) {
         $decryptedTujuan = DataDecrypt($row["tujuan"], $encryptionKey);
 
         $historyTransaction[] = array(
+          "encryptedID" => $orderID,
           "id" => $decryptedID,
           "tarif" => $row['tarif'],
           "tanggal" => $row['tanggal'],

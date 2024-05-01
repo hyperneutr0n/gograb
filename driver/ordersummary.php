@@ -68,7 +68,8 @@ if(isset($_POST["submit"])){
 
 
 
-?><div class="container container-login">
+?>
+<div class="container container-login">
 <h1 class="text-center">Order Summary</h1>
 <br>
 

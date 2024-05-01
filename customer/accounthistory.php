@@ -12,7 +12,7 @@ if (!isset($_SESSION["userLogged"]) || !$_SESSION["userLogged"]) {
 $historyTransaction = isset($_SESSION["historyTransaction"]) ? $_SESSION["historyTransaction"] : array();
 ?>
 
-<div class="container xcontainer-login">
+<div class="container container-login">
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <h2 class="text-center mb-4">GoGrab Account History</h2>
@@ -32,8 +32,8 @@ $historyTransaction = isset($_SESSION["historyTransaction"]) ? $_SESSION["histor
                 </thead>
                 <tbody>
                     <?php foreach ($historyTransaction as $historyRow) : ?>
+                        <form action="invoice.php" method="post">
                         <tr>
-                            <form action="invoice.php" method="post">
                                 <td><?php echo $historyRow['id']; ?></td>
                                 <td><?php echo $historyRow['tanggal']; ?></td>
                                 <td><?php echo $historyRow['asal']; ?></td>
@@ -43,12 +43,12 @@ $historyTransaction = isset($_SESSION["historyTransaction"]) ? $_SESSION["histor
                                 <td><?php echo $historyRow['payment_method']; ?></td>
                                 <td><?php echo $historyRow['notes']; ?></td>
                                 <td>
-                                    <input type="hidden" name="invoice_id" value="<?php echo $historyRow['id']; ?>">
-                                    <button type="submit" class="btn btn-primary">See Receipt</button>
+                                    <input type="hidden" name="invoice_id" value="<?php echo $historyRow['encryptedID']; ?>">
+                                    <button type="submit" name = "submit" class="btn btn-primary">See Receipt</button>
                                     <!-- <button onclick="window.print()" class="btn btn-primary">print</button> -->
                                 </td>
-                            </form>
-                        </tr>
+                            </tr>
+                        </form>
                     <?php endforeach; ?>
                     <?php if (empty($historyTransaction)) : ?>
                         <tr>

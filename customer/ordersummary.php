@@ -44,18 +44,16 @@ if ($stmt) {
     $driverID = $row["drivers_id"];
 }
 
-$drivername = "";
-$driverplate = "";
 
 
 if ($driverID != "" && $driverID != null) {
     $sql2 = "SELECT*FROM drivers
-    WHERE id = $driverID";
+    WHERE id = '$driverID'";
     $stmt2 = mysqli_query($conn, $sql2);
     if ($stmt2) {
         $row2 = mysqli_fetch_assoc($stmt2);
         $drivername = $row2["nama"];
-        $driverplate = $row["plat_nomor_kendaraan"];
+        $driverplate = $row2["plat_nomor_kendaraan"];
     }
 } else {
     $drivername = "Finding driver..";
