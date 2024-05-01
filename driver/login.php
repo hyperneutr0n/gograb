@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_SESSION["driverLogged"]) && $_SESSION["driverLogged"]== true) {
     header("Location: index.php");
     exit();

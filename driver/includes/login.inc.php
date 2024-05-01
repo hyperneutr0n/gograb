@@ -26,28 +26,21 @@ if (isset($_POST["login-submit"])) {
         exit();
       } elseif ($pwd_Check == true) {
         session_start();
-
-        $sql2 = "SELECT id FROM drivers WHERE username='$username';";
+        $sql2 = "SELECT*FROM drivers WHERE username='$username';";
         $stmt2 = mysqli_query($conn, $sql2);
 
         if ($stmt2) {
           $row = mysqli_fetch_assoc($stmt2);
-          $id = $row["id"];
-
-          $_SESSION["id"] = $id;
+          $_SESSION['driverId'] = $row['id'];
+          $_SESSION['driverName'] = $row['username'];
+          $_SESSION['kendaraan'] = $row['jenis_kendaraan'];
+  
+          $driverLogged = true;
+          $_SESSION["driverLogged"] = $driverLogged;
         }
 
 
-
-
-        $_SESSION['driverId'] = $row['id'];
-        $_SESSION['driverName'] = $row['username'];
-        $_SESSION['kendaraan'] = $row['jenis_kendaraan'];
-
-        $driverLogged = true;
-        $_SESSION["driverLogged"] = $driverLogged;
-
-        header("Location: ../order.php?login=loginSuccess");
+        header("Location: ../order.php?login=loginSuccess" . $row['id']);
         exit();
       } else {
         header("Location: ../login.php?error=wrongPassword");

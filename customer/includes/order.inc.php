@@ -90,6 +90,7 @@ if (isset($_POST["order-submit"])) {
         $currdate = date("YmdHis");
         $encryptedPickup = DataEncrypt($pickup, $encryptionKey);
         $encryptedDestination = DataEncrypt($destination,$encryptionKey);
+        $driverID = "";
 
 
         mysqli_stmt_bind_param($stmt, "ssssssssssss", $encryptedID, $tarif, $currdate, $price, $encryptedPickup, $encryptedDestination, $zero, $payment_method, $notes, $customerID, $adminID, $layananID);
