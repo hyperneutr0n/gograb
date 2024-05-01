@@ -1,6 +1,6 @@
 <?php
 require "dbconn.inc.php";
-include "cryptographic.inc.php";
+require "cryptographic.inc.php";
 
 session_start();
 
@@ -120,11 +120,12 @@ if (isset($_POST['register-submit'])) {
           //bind param
           $key = GenerateKey();
           $encryptedID = DataEncrypt($id, $key);
-          $encryptedKtp = DataEncrypt($nomor_ktp, $key);
-          $encryptedTelp = DataEncrypt($nomor_telp, $key);
+          $encryptedKtp = DataEncrypt($ktp, $key);
+          $encryptedTelp = DataEncrypt($mobilenumber, $key);
           $encryptedZero = DataEncrypt(0, $key);
           $idKey = generateIDKey();
           mysqli_stmt_bind_param($stmt, "ssssssssss", $encryptedID, $fullname, $username, $email, $hashpass, $encryptedZero, $encryptedTelp, $encryptedKtp, $vehicle_type, $vehicle_plate);
+
           mysqli_stmt_execute($stmt);
 
           mysqli_stmt_bind_param($stmt2, "sss", $idKey, $encryptedID, $key);

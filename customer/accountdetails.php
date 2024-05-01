@@ -68,7 +68,7 @@ $customerdetails =  $_SESSION["customerDetails"];
                 </div>
                 <div class="form-group">
                     <label for="">Saldo: </label>
-                    <label for="saldo">Rp.<?= $customerdetails["saldo"]; ?></label>
+                    <label for="saldo">Rp.0 </label>
                     </select>
                 </div>
                 <?php if ($showPasswordFields) : ?>
