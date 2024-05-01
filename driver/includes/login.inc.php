@@ -31,7 +31,8 @@ if (isset($_POST["login-submit"])) {
 
         if ($stmt2) {
           $row = mysqli_fetch_assoc($stmt2);
-          $_SESSION['driverId'] = $row['id'];
+          $id = $row["id"];
+          $_SESSION['driverId'] = $id;
           $_SESSION['driverName'] = $row['username'];
           $_SESSION['kendaraan'] = $row['jenis_kendaraan'];
   
@@ -40,7 +41,7 @@ if (isset($_POST["login-submit"])) {
         }
 
 
-        header("Location: ../order.php?login=loginSuccess" . $row['id']);
+        header("Location: order.inc.php?login=loginSuccess");
         exit();
       } else {
         header("Location: ../login.php?error=wrongPassword");

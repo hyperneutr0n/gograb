@@ -5,10 +5,10 @@ session_start();
 if (!isset($_SESSION["driverLogged"]) || !$_SESSION["driverLogged"]) {
   header("Location: login.php");
   exit();
-}
-else{
+} else {
   $driverLogged = true;
   require "header.php";
+  include "includes/cryptographic.inc.php";
 }
 
 $order = isset($_SESSION["order"]) ? $_SESSION["order"] : array();
@@ -31,12 +31,12 @@ $order = isset($_SESSION["order"]) ? $_SESSION["order"] : array();
         </thead>
         <tbody>
           <?php foreach ($order as $orderDetails) : ?>
-            <form action="includes/updateorder.inc.php">
+            <form action="includes/updateorder.inc.php" method = "POST">
               <tr>
-                <td><?php echo $orderDetails['id']; ?></td>
+                <td><?php echo DataDecrypt($orderDetails['id'], $orderDetails['key']); ?></td>
                 <td><?php echo $orderDetails['customer_name']; ?></td>
-                <td><?php echo $orderDetails['asal']; ?></td>
-                <td><?php echo $orderDetails['tujuan']; ?></td>
+                <td><?php echo DataDecrypt($orderDetails['asal'], $orderDetails['key']); ?></td>
+                <td><?php echo DataDecrypt($orderDetails['tujuan'], $orderDetails['key']); ?></td>
                 <td><?php echo $orderDetails['total']; ?></td>
                 <td><?php echo $orderDetails['notes']; ?></td>
                 <td><button type="submit" name="submit">Update</button></td>
@@ -58,6 +58,13 @@ $order = isset($_SESSION["order"]) ? $_SESSION["order"] : array();
       </table>
     </div>
   </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
 </div>
 
 <?php require "footer.php"; ?>
