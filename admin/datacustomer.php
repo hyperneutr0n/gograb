@@ -33,7 +33,6 @@ for ($i = 0; $i < count($customer_key); $i++) {
       $row = mysqli_fetch_assoc($result2);
 
       $decryptedID = DataDecrypt($row["id"], $customer_key[$i]['encryptionkey']);
-      $decryptedSaldo = DataDecrypt($row["saldo"], $customer_key[$i]['encryptionkey']);
       $decryptedNoTelp = DataDecrypt($row["no_telp"], $customer_key[$i]['encryptionkey']);
 
       $customerdetails = array(
