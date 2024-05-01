@@ -12,24 +12,23 @@ if ($userLogged) { //SESSION berfungsi untuk store data dan bisa digunakan cross
     header("Location: login.php");
 }
 ?>
-    <link rel="stylesheet" href="css/assets/main.css">
 <main>
-    div class="container">
-    <div class="image">
-        <img src="assets/homepic1.jpg" alt="Driver in car" width="100%" height="100%">
-    </div>
+    <div class="container">
+        <div class="image">
+            <img src="assets/homepic1.jpg" alt="Driver in car" width="100%" height="100%">
+        </div>
 
-    <?php
-    $title = "Drive when you want, make what you need";
-    $description = " There's a hundred-thousand streets in this city. You don't need to know the route. You give us a time and a place, We will get you there.";
-    $buttonText = "Order GoGrab";
-    ?>
+        <?php
+        $title = "Drive when you want, make what you need";
+        $description = " There's a hundred-thousand streets in this city. You don't need to know the route. You give us a time and a place, We will get you there.";
+        $buttonText = "Order GoGrab";
+        ?>
 
-    <div class="content">
-        <h1><?php echo $title; ?></h1>
-        <p><?php echo $description; ?></p>
-        <button class="button"><?php echo $buttonText; ?></button>
-    </div>
+        <div class="content">
+            <h1><?php echo $title; ?></h1>
+            <p><?php echo $description; ?></p>
+            <button class="button"><?php echo $buttonText; ?></button>
+        </div>
     </div>
     <div class="container">
         <?php
