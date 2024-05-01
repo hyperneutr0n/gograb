@@ -39,7 +39,7 @@
                       ';
                     } else {
                         echo '<a class="nav-item nav-link active" href="login.php">Login</a>';
-                        echo '<a class="nav-item nav-link" href="register.php">Register</a>';
+                        echo '<a class="nav-item nav-link" href="driverregister.php">Register</a>';
                     }
                     ?>
                 </div>
