@@ -21,7 +21,6 @@ $historyTransaction = isset($_SESSION["historyTransaction"]) ? $_SESSION["histor
                     <tr>
                         <th>Invoice</th>
                         <th>Date</th>
-                        <th>Ride</th>
                         <th>From</th>
                         <th>To</th>
                         <th>Total</th>
@@ -35,7 +34,6 @@ $historyTransaction = isset($_SESSION["historyTransaction"]) ? $_SESSION["histor
                         <tr>
                             <td><?php echo $historyRow['id']; ?></td>
                             <td><?php echo $historyRow['tanggal']; ?></td>
-                            <td><?php echo $historyRow['layanans_id']; ?></td>
                             <td><?php echo $historyRow['asal']; ?></td>
                             <td><?php echo $historyRow['tujuan']; ?></td>
                             <td><?php echo $historyRow['total']; ?></td>
