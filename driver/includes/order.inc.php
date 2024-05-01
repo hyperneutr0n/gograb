@@ -5,7 +5,7 @@ include "cryptographic.inc.php";
 
 $order = array();
 
-if (isset($_SESSION["userLogged"]) && $_SESSION["userLogged"] == true) {
+if (isset($_SESSION["driverLogged"]) && $_SESSION["driverLogged"] == true) {
     //query tabel orders
     $layanan = $_SESSION["jenis_kendaraan"];
     if ($layanan == "Car") {
