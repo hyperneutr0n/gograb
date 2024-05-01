@@ -1,4 +1,13 @@
 <?php
+
+if(isset($_POST["adminLogged"]) && $_POST["adminLogged"] == true){
+  require "header.php";
+}
+else{
+  header("Location: login.php");
+}
+
+
 require "includes/dbconn.inc.php";
 include "includes/cryptographic.inc.php";
 

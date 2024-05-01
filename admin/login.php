@@ -1,9 +1,9 @@
 <?php
-if (isset($_SESSION["userLogged"]) && $_SESSION["userLogged"]== true) {
+if (isset($_SESSION["adminLogged"]) && $_SESSION["adminLogged"]== true) {
     header("Location: index.php");
     exit();
 } else {
-    $userLogged = false;
+    $adminLogged = false;
     require "header.php";
 }
 
