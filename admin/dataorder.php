@@ -1,6 +1,7 @@
 <?php
-
-if (isset($_POST["adminLogged"]) && $_POST["adminLogged"] == true) {
+session_start();
+if (isset($_SESSION["adminLogged"]) && $_SESSION["adminLogged"] == true) {
+  $adminLogged = true;
   require "header.php";
 } else {
   header("Location: login.php");
@@ -60,7 +61,7 @@ for ($i = 0; $i < count($customer_key); $i++) {
 
 <body>
   <div class="container mt-5">
-    <h2>Data Customer</h2>
+    <h2>Data Order</h2>
     <table class="table">
       <thead>
         <tr>
