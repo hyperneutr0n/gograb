@@ -86,6 +86,7 @@ if (isset($_POST['register-submit'])) {
                 } else {
                     //bind param
                     $key = GenerateKey();
+                    $zero = 0;
                     $encryptedID = DataEncrypt($id, $key);
                     $encryptedZero = DataEncrypt($zero, $key);
                     $encryptedTelp = DataEncrypt($mobilenumber, $key);
