@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_SESSION["driverLogged"]) && $_SESSION["driverLogged"]== true) {
+if (isset($_SESSION["driverLogged"]) && $_SESSION["driverLogged"] == true) {
     header("Location: index.php");
     exit();
 } else {
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <div class="row justify-content-center">
-                <button type="submit" class="btn btn-primary" name = "login-submit">Login</button>
+                <button type="submit" class="btn btn-primary" name="login-submit">Login</button>
             </div>
             <div class="row mt-4"></div>
             <div class="row mt-4"></div>

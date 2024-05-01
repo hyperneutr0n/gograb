@@ -22,7 +22,7 @@ function formatDistance($distance)
 function formatDate($dateString)
 {
     $date = DateTime::createFromFormat('YmdHis', $dateString);
-    $formattedDate =$date->format('Y-m-d H:i:s');
+    $formattedDate = $date->format('Y-m-d H:i:s');
 
     return $formattedDate;
 }
@@ -36,7 +36,7 @@ $encryptedID = $orderSummary["encryptedID"];
 
 $sql = "SELECT drivers_id
 FROM orders
-WHERE id= $encryptedID";
+WHERE id= '$encryptedID'";
 $stmt = mysqli_query($conn, $sql);
 $driverID = "";
 if ($stmt) {

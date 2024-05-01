@@ -25,7 +25,7 @@
                     <?php
                     if ($driverLogged) {  //krn sudah ada pengecekan di atas jika udah log in maka tampilan berbeda sesuai hak akses
                         echo ' 
-                        <a class = "nav-item nav-link ml-2 mr-2" href = "ride.php"> Ride</a>
+                        <a class = "nav-item nav-link ml-2 mr-2" href = "includes/order.inc.php">Orders</a>
                         <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle bg-transparent mt-0.5" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color:black;">
                         Account

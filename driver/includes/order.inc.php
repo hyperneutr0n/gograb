@@ -54,9 +54,9 @@ if (isset($_SESSION["driverLogged"]) && $_SESSION["driverLogged"] == true) {
                         $decryptedTujuan = DataDecrypt($innerrow["tujuan"], $orderEncryptionKey);
 
 
-                        echo $decryptedID;
-                        echo $decryptedAsal;
-                        echo $decryptedTujuan;
+                        // echo $decryptedID;
+                        // echo $decryptedAsal;
+                        // echo $decryptedTujuan;
 
 
                         // Simpan data pesanan ke dalam array
@@ -71,19 +71,20 @@ if (isset($_SESSION["driverLogged"]) && $_SESSION["driverLogged"] == true) {
                             "payment_method" => $innerrow['payment_method'],
                             "notes" => $innerrow['notes'],
                             "customers_id" => $innerrow['customers_id'],
+                            "customer_name" => $customerName,
                             "drivers_id" => $innerrow['drivers_id'],
                             "admins_id" => $innerrow['admins_id'],
                             "layanans_id" => $innerrow['layanans_id']
                         );
                     }
                     $_SESSION["order"] = $order;
-                    foreach ($order as $item) {
-                        echo "ID: " . $item['id'] . "<br>";
-                        echo "customer: " . $item['customers_id'] . "<br>";
-                        // Repeat for other fields as needed
-                        echo "<br>";
-                    }
-                    //header("Location: ../order.php");
+                    // foreach ($order as $item) {
+                    //     echo "ID: " . $item['id'] . "<br>";
+                    //     echo "customer: " . $item['customers_id'] . "<br>";
+                    //     // Repeat for other fields as needed
+                    //     echo "<br>";
+                    // }
+                    header("Location: ../order.php");
                     exit();
                 }
             } else {
