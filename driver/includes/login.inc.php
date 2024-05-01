@@ -40,11 +40,12 @@ if (isset($_POST["login-submit"])) {
 
 
 
-        $_SESSION['userid'] = $row['id'];
-        $_SESSION['username'] = $row['username'];
+        $_SESSION['driverId'] = $row['id'];
+        $_SESSION['driverName'] = $row['username'];
+        $_SESSION['kendaraan'] = $row['jenis_kendaraan'];
 
-        $userLogged = true;
-        $_SESSION["userLogged"] = $userLogged;
+        $driverLogged = true;
+        $_SESSION["driverLogged"] = $driverLogged;
 
         header("Location: ../order.php?login=loginSuccess");
         exit();

@@ -1,12 +1,12 @@
 <?php 
 session_start();
-$userLogged= $_SESSION["userLogged"];
-if ($userLogged) {
+$driverLogged= $_SESSION["driverLogged"];
+if ($driverLogged) {
   require "header.php";
   
 } else {
-  $userLogged = false;
-  $_SESSION["userLogged"] = $userLogged;
+  $driverLogged = false;
+  $_SESSION["driverLogged"] = $driverLogged;
   header("Location: login.php");
 
 }

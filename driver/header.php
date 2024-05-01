@@ -23,7 +23,7 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="#company">Company <span class="sr-only">(current)</span></a>
                     <?php
-                    if ($userLogged) {  //krn sudah ada pengecekan di atas jika udah log in maka tampilan berbeda sesuai hak akses
+                    if ($driverLogged) {  //krn sudah ada pengecekan di atas jika udah log in maka tampilan berbeda sesuai hak akses
                         echo ' 
                         <a class = "nav-item nav-link ml-2 mr-2" href = "ride.php"> Ride</a>
                         <div class="dropdown">

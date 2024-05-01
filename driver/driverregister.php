@@ -1,5 +1,5 @@
 <?php
-$userLogged =false;
+$driverLogged =false;
 
 require "header.php";
 ?>

@@ -1,9 +1,9 @@
 <?php
-if (isset($_SESSION["userLogged"]) && $_SESSION["userLogged"]== true) {
+if (isset($_SESSION["driverLogged"]) && $_SESSION["driverLogged"]== true) {
     header("Location: index.php");
     exit();
 } else {
-    $userLogged = false;
+    $driverLogged = false;
     require "header.php";
 }
 
@@ -14,9 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["username"]) && isset($_POST["password"])) {
         // insert pengecekan database here sementara lsg ubah jadi true
 
-        $userLogged = true;
+        $driverLogged = true;
 
-        $_SESSION['userLogged'] = $userLogged;
+        $_SESSION['driverLogged'] = $driverLogged;
 
         header("Location: index.php");
     }

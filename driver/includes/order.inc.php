@@ -3,130 +3,72 @@ session_start();
 include "dbconn.inc.php";
 include "cryptographic.inc.php";
 
-function generateID()
-{
-    $currdate = date("YmdHis");
-    $id = "INVGGRB" . $currdate;
-    return $id;
-}
-function generateIDKey()
-{
-    $currdate = date("YmdHis");
-    $id = "ORDKEY" . $currdate;
-    return $id;
-}
+$order = array();
 
-$customerID = $_SESSION["id"];
-
-if (isset($_POST["order-submit"])) {
-
-    $pickup = $_POST["pickup"];
-    $destination = $_POST["destination"];
-    $distance = $_POST["distance"];
-    $price = $_POST["price"];
-    $jenis = $_POST["jenis"];
-    $tarif = $_POST["tarif"];
-    $payment_method = $_POST["payment_method"];
-    $notes = $_POST["notes"];
-
-    // Debug: Print out the values of variables to check their content
-    echo "pickup: " . $pickup . "<br>";
-    echo "destination: " . $destination . "<br>";
-    echo "distance: " . $distance . "<br>";
-    echo "price: " . $price . "<br>";
-    echo "jenis: " . $jenis . "<br>";
-    echo "tarif: " . $tarif . "<br>";
-    echo "payment_method: " . $payment_method . "<br>";
-    echo "notes: " . $notes . "<br>";
-
-    $driverID;
-    $adminID;
-    $layananID;
-    $encryptionKey =  GenerateKey();
-
-
-    $sqlFindRandomDriver = "SELECT * FROM drivers WHERE jenis_kendaraan = '$jenis' ORDER BY RAND() LIMIT 1";
-    $stmt2 = mysqli_query($conn, $sqlFindRandomDriver);
-    if ($stmt2) {
-        $driverRow = mysqli_fetch_assoc($stmt2);
-        $driverID = $driverRow["id"];
-    }
-
-    $sqlFindRandomAdmin = "SELECT * FROM admins ORDER BY RAND() LIMIT 1";
-    $stmt3 = mysqli_query($conn, $sqlFindRandomAdmin);
-    if ($stmt3) {
-        $adminRow = mysqli_fetch_assoc($stmt3);
-        $adminID = $adminRow["id"];
-    }
-
-    $sqlLayanan = "SELECT * FROM layanans WHERE jenis=?";
-    $stmt4 =  mysqli_stmt_init($conn);
-
-
-
-    if (mysqli_stmt_prepare($stmt4, $sqlLayanan)) {
-
-        mysqli_stmt_bind_param($stmt4, "s", $jenis);
-        mysqli_stmt_execute($stmt4);
-        $resultLayanan = mysqli_stmt_get_result($stmt4);
-
-        if ($resultLayanan) {
-
-            $layananRow = mysqli_fetch_assoc($resultLayanan);
-            $layananID = $layananRow["id"];
-        } else {
-            echo "Error " . mysqli_error($conn);
-        }
+if (isset($_SESSION["userLogged"]) && $_SESSION["userLogged"] == true) {
+    //query tabel orders
+    $layanan = $_SESSION["jenis_kendaraan"];
+    if ($layanan == "Car") {
+        $id_layanan = 2;
     } else {
-        header("Location: ../ride.php?error");
+        $id_layanan = 1;
     }
+    $sql = "SELECT * FROM orders WHERE drivers_id = '' AND layanan_id = $id_layanan";
+    $stmt = mysqli_query($conn, $sql);
 
-    // Debug: Print out the values of variables to check their content
-    echo "driverID: " . $driverID . "<br>";
-    echo "adminID: " . $adminID . "<br>";
-    echo "layananID: " . $layananID . "<br>";
+    if ($stmt) {
+        $row = mysqli_fetch_assoc($stmt);
+        $customerID = $row["customers_id"];
 
-    $sql = "INSERT INTO orders(id, tarif, tanggal, total, asal, tujuan, diskon, payment_method, notes, customers_id, drivers_id, admins_id, layanans_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("Location: ../order.php");
-        exit();
-    } else {
-        $invoiceID =  generateID();
-        $encryptedID = DataEncrypt($invoiceID, $encryptionKey);
-        $zero = 0;
-        $currdate = date("YmdHis");
-        $encryptedPickup = DataEncrypt($pickup, $encryptionKey);
-        $encryptedDestination = DataEncrypt($destination,$encryptionKey);
+        // Ambil kunci enkripsi customer dari tabel keycustomer
+        $sql2 = "SELECT*FROM customers WHERE id = '$customerID'";
+        $stmt2 = mysqli_query($conn, $sql2);
+        if ($stmt2) {
+            $rowCustomer = mysqli_fetch_assoc($stmt2);
+            $customerName = $rowCustomer["nama"];
 
+            // Ambil kunci enkripsi order dari tabel keyOrder
+            $sql3 = "SELECT encryptionKey FROM keyOrders WHERE orders_id = '{$row['id']}'";
+            $stmt3 = mysqli_query($conn, $sql3);
+            if ($stmt3) {
+                $orderEncryptionKey = mysqli_fetch_assoc($stmt3)['encryptionKey'];
 
-        mysqli_stmt_bind_param($stmt, "sssssssssssss", $encryptedID, $tarif, $currdate, $price, $encryptedPickup, $encryptedDestination, $zero, $payment_method, $notes, $customerID, $driverID, $adminID, $layananID);
-        // Execute the SQL query
-        if (mysqli_stmt_execute($stmt)) {
-            $keyOrderID = generateIDKey();
-            $sqlKey = "INSERT into keyOrders(id,orders_id, encryptionkey) VALUES(?,?,?)";
-            //('$keyOrderID','$encryptedID', '$encryptionKey')";
+                while ($row = mysqli_fetch_assoc($stmt)) {
+                    // Dekripsi data pesanan
+                    $decryptedID = DataDecrypt($row["id"], $orderEncryptionKey);
+                    $decryptedAsal = DataDecrypt($row["asal"], $orderEncryptionKey);
+                    $decryptedTujuan = DataDecrypt($row["tujuan"], $orderEncryptionKey);
 
-            $stmtSqlKey =  mysqli_stmt_init($conn);
-
-            if (mysqli_stmt_prepare($stmtSqlKey, $sqlKey)) {
-                // Query executed successfully
-                // Redirect to a success page or perform any additional actions
-                mysqli_stmt_bind_param($stmtSqlKey, "sss", $keyOrderID, $encryptedID, $encryptionKey);
-                mysqli_stmt_execute($stmtSqlKey);
-
-                header("Location:../index.php");
-
+                    // Simpan data pesanan ke dalam array
+                    $order[] = array(
+                        "id" => $decryptedID,
+                        "tarif" => $row['tarif'],
+                        "tanggal" => $row['tanggal'],
+                        "total" => $row['total'],
+                        "asal" => $decryptedAsal,
+                        "tujuan" => $decryptedTujuan,
+                        "diskon" => $row['diskon'],
+                        "payment_method" => $row['payment_method'],
+                        "notes" => $row['notes'],
+                        "customers_id" => $row['customer_id'],
+                        "drivers_id" => $row['customer_id'],
+                        "admins_id" => $row['admins_id'],
+                        "layanans_id" => $row['layanans_id']
+                    );
+                }
+                $_SESSION["order"] = $order;
+                header("Location: ../order.php");
+                exit();
             } else {
-                echo "Error " . mysqli_error($conn);
+                echo "Error fetching order encryption key: " . mysqli_error($conn);
             }
         } else {
-            // Query execution failed
-            // Print out the error message for debugging
-            echo "Error executing query: " . mysqli_stmt_error($stmt);
+            echo "Error fetching customer customer: " . mysqli_error($conn);
         }
+    } else {
+        echo "Error fetching database: " . mysqli_error($conn);
     }
 } else {
-    header("Location: ../order.php");
+    header("Location: ../index.php");
     exit();
 }
