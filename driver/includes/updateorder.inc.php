@@ -14,8 +14,10 @@ if(isset($_POST["submit"])){
 
     $stmt = mysqli_query($conn,$sql);
 
+    $_SESSION["invoiceID"] = $id;
+
     if($stmt){
-        header("Location: ../ordarsummary.php");
+        header("Location: ../ordersummary.php");
     }
     else{
         header("Location: ../order.php?failed");
