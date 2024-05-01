@@ -88,10 +88,19 @@ if (isset($_POST["submit"])) {
       padding-left: 20vw;
     }
 
-    a {
+    /* a {
 
       padding-left: 47vw;
 
+    } */
+    @media print {
+      #printButton {
+        display: none;
+      }
+    }
+
+    #printButton {
+      margin-left: 47vw;
     }
   </style>
 </head>
@@ -129,7 +138,7 @@ if (isset($_POST["submit"])) {
     <br>
   </div>
 
-  <a><button onclick="window.print()" class="btn btn-primary">Print</button></a>
+  <button id="printButton" onclick="window.print()" class="btn btn-primary">Print</button>
 
 </body>
 
