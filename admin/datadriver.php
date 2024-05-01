@@ -1,5 +1,7 @@
 <?php
-if (isset($_POST["adminLogged"]) && $_POST["adminLogged"] == true) {
+session_start();
+if (isset($_SESSION["adminLogged"]) && $_SESSION["adminLogged"] == true) {
+  $adminLogged = true;
   require "header.php";
 } else {
   header("Location: login.php");
@@ -18,8 +20,9 @@ if (isset($_POST["adminLogged"]) && $_POST["adminLogged"] == true) {
 </head>
 
 <body>
+  <h2>Data Driver</h2>
   <div class="container mt-5">
-    <h2>Data Driver</h2>
+    <h2>Data Customer</h2>
     <table class="table">
       <thead>
         <tr>

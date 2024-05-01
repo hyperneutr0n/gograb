@@ -1,9 +1,9 @@
 <?php
-
-if(isset($_POST["adminLogged"]) && $_POST["adminLogged"] == true){
+session_start();
+if (isset($_SESSION["adminLogged"]) && $_SESSION["adminLogged"] == true) {
+  $adminLogged = true;
   require "header.php";
-}
-else{
+} else {
   header("Location: login.php");
 }
 
@@ -41,8 +41,7 @@ for ($i = 0; $i < count($customer_key); $i++) {
         "nama" => $row["nama"],
         "username" => $row["username"],
         "email" => $row["email"],
-        "saldo" => $decryptedSaldo,
-        "no_telp" => $decryptedNoTelp
+        "no_telp" => "+62-" . $decryptedNoTelp
       );
       $customer_data[$i] = $customerdetails;
     }
@@ -75,7 +74,15 @@ for ($i = 0; $i < count($customer_key); $i++) {
       </thead>
       <tbody>
         <?php
-          
+        for ($i = 0; $i < count($customer_data); $i++) {
+          echo "<tr>";
+          foreach ($customer_data[$i] as $data) {
+            echo "<td>";
+            echo $data;
+            echo "</td>";
+          }
+          echo "</tr>";
+        }
         ?>
       </tbody>
     </table>
