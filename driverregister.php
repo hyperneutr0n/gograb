@@ -50,7 +50,7 @@ require "header.php";
                     <div class="form-group justify-content-center">
                         <select name="vehicle_type" class="form-control" required>
                             <option value="" disabled selected>- Select Vehicle Type -</option>
-                            <option value="Bike">Bike</option>
+                            <option value="Motorcycle">Motorcycle</option>
                             <option value="Car">Car</option>
                         </select>
                     </div>

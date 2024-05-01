@@ -31,37 +31,58 @@ if (isset($_POST['register-submit'])) {
   $vehicle_plate = $_POST["vehicle_plate"];
 
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    header("Location: ../driverregister.php?error=invalidemail" .
+    header("Location: ../driverregister.php?error=invalidEmail" .
       "&fullname=" . $fullname .
       "&username=" . $username .
-      "&mobile=" . $mobilenumber);
+      "&mobile=" . $mobilenumber .
+      "&ktp=" . $ktp .
+      "&type=" . $vehicle_type .
+      "&plate=" . $vehicle_plate);
     exit();
-  } elseif (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-    header("Location: ../driverregister.php?error=invalidusername" .
+  } else if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
+    header("Location: ../driverregister.php?error=invalidUsername" .
       "&fullname=" . $fullname .
       "&email=" . $email .
-      "&mobile=" . $mobilenumber);
+      "&mobile=" . $mobilenumber .
+      "&ktp=" . $ktp .
+      "&type=" . $vehicle_type .
+      "&plate=" . $vehicle_plate);
     exit();
-  } elseif (preg_match('/^[0-9]{9}+$/', $mobilenumber)) {
-    header("Location: ../driverregister.php?error=invalidemobilenumber" .
-      "&fullname=" . $fullname .
-      "&username=" . $username .
-      "&email=" . $email);
-    exit();
-  } elseif (!preg_match("/^[0-9]{16}$/", $ktp)) {
-    header("Location: ../driverregister.php?error=invalidktp" .
+  } else if (preg_match('/^[0-9]{9}+$/', $mobilenumber)) {
+    header("Location: ../driverregister.php?error=invalidMobileNumber" .
       "&fullname=" . $fullname .
       "&username=" . $username .
       "&email=" . $email .
-      "&mobile=" . $mobilenumber);
+      "&ktp=" . $ktp .
+      "&type=" . $vehicle_type .
+      "&plate=" . $vehicle_plate);
     exit();
-  } elseif ($password != $confirmpass) {
-    header("Location: ../driverregister.php?error=invalidemail" .
+  } else if (!preg_match("/^[0-9]{16}$/", $ktp)) {
+    header("Location: ../driverregister.php?error=invalidKtp" .
       "&fullname=" . $fullname .
       "&username=" . $username .
       "&email=" . $email .
       "&mobile=" . $mobilenumber .
-      "&ktp=" . $ktp);
+      "&ktp=" . $ktp .
+      "&type=" . $vehicle_type .
+      "&plate=" . $vehicle_plate);
+    exit();
+  } else if (!preg_match('/[A-Z]{1,2}\s{1}\d{1,4}\s{1}[A-Z]{1,4}/i', $vehicle_plate)) {
+    header("Location: ../driverregister.php?error=invalidPlate" .
+      "&fullname=" . $fullname .
+      "&username=" . $username .
+      "&email=" . $email .
+      "&mobile=" . $mobilenumber .
+      "&ktp=" . $ktp .
+      "&type=" . $vehicle_type);
+    exit();
+  } else if ($password != $confirmpass) {
+    header("Location: ../driverregister.php?error=passNotMatch" .
+      "&fullname=" . $fullname .
+      "&username=" . $username .
+      "&email=" . $email .
+      "&ktp=" . $ktp .
+      "&type=" . $vehicle_type);
     exit();
   } else {
     $sql = "SELECT username FROM drivers WHERE username=?";
