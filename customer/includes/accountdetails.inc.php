@@ -42,8 +42,10 @@ if(isset($_SESSION["userLogged"]) && $_SESSION["userLogged"] == true){
                 if($result2){
                     $customerRow = mysqli_fetch_assoc($result2);
     
-                    // Decrypt sensitive data
+                    // Decrypt sensitive datas
                     $decryptedID = DataDecrypt($customerRow["id"], $encryptionKey);
+                    $decryptedSaldo = DataDecrypt($customerRow["saldo"], $encryptionKey);
+                    $decryptedNoTelp = DataDecrypt($customerRow["no_telp"], $encryptionKey);
     
                     // Store customer details in an array
                     $customerdetails = array(
@@ -51,9 +53,8 @@ if(isset($_SESSION["userLogged"]) && $_SESSION["userLogged"] == true){
                         "nama" => $customerRow["nama"],
                         "username" => $customerRow["username"],
                         "email" => $customerRow["email"],
-                        "saldo" => $customerRow["saldo"],
-                        "no_telp" => $customerRow["no_telp"],
-                        "points" => $customerRow["points"]
+                        "saldo" => $decryptedSaldo,
+                        "no_telp" => $decryptedNoTelp
                     );
     
                     // Store customer details in session variable
