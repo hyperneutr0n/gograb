@@ -1,93 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+session_start();
+require "includes/dbconn.inc.php";
+$userLogged = $_SESSION["userLogged"];
+if ($userLogged && isset($_SESSION["ordersummary"])) {
+    require "header.php";
+} else {
+    $_SESSION["userLogged"] = $userLogged;
+    header("Location: login.php");
+}
+// Definisikan fungsi untuk memformat angka ke dalam mata uang
+function formatCurrency($amount)
+{
+    return 'Rp ' . number_format($amount, 0, ',', '.');
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Summary</title>
-    <link rel="stylesheet" href="main.css">
-</head>
+function formatDistance($distance)
+{
+    return ceil($distance);
+}
 
-<body>
-    <?php
-    // Definisikan fungsi untuk memformat angka ke dalam mata uang
-    function formatCurrency($amount)
-    {
-        return 'Rp ' . number_format($amount, 0, ',', '.');
+function formatDate($dateString)
+{
+    $date = DateTime::createFromFormat('YmdHis', $dateString);
+    $formattedDate =$date->format('Y-m-d H:i:s');
+
+    return $formattedDate;
+}
+
+
+include 'header.php';
+$orderSummary = $_SESSION["ordersummary"];
+
+$encryptedID = $orderSummary["encryptedID"];
+
+
+$sql = "SELECT drivers_id
+FROM orders
+WHERE id= $encryptedID";
+$stmt = mysqli_query($conn, $sql);
+$driverID = "";
+if ($stmt) {
+    $row = mysqli_fetch_assoc($stmt);
+    $driverID = $row["drivers_id"];
+}
+
+$drivername = "";
+$driverplate = "";
+
+
+if ($driverID != "" && $driverID != null) {
+    $sql2 = "SELECT*FROM drivers
+    WHERE id = $driverID";
+    $stmt2 = mysqli_query($conn, $sql2);
+    if ($stmt2) {
+        $row2 = mysqli_fetch_assoc($stmt2);
+        $drivername = $row2["nama"];
+        $driverplate = $row["plat_nomor_kendaraan"];
     }
-    include 'header.php';
-    $orderSummary = [
-        'order_id' => 'UBER123456',
-        'pickup_location' => 'Jalan Pahlawan No. 10, Jakarta',
-        'dropoff_location' => 'Jalan Sudirman No. 50, Jakarta',
-        'driver' => [
-            'name' => 'John Doe',
-            'rating' => 4.8,
-            'car' => [
-                'make' => 'Toyota',
-                'model' => 'Camry',
-                'plate' => 'B 1234 XYZ',
-            ],
-        ],
-        'fare' => [
-            'base_fare' => 20000,
-            'distance_fare' => 15000,
-            'time_fare' => 5000,
-            'total_fare' => 40000,
-        ],
-        'trip_details' => [
-            'distance' => '10 km',
-            'duration' => '15 min',
-        ],
-    ];
-    ?>
-    <div class="order-summary">
-        <h1>Ringkasan Pesanan Uber</h1>
+} else {
+    $drivername = "Finding driver..";
+    $driverplate = "Finding driver..";
+}
 
-        <!-- Informasi Pesanan -->
-        <div class="order-info">
-            <p><strong>Pesanan ID:</strong> <?php echo $orderSummary['order_id']; ?></p>
-        </div>
+?>
+<div class="container container-login">
+    <h1 style="text-align:center">Order Summary</h1>
+    <br>
 
-        <!-- Informasi Perjalanan -->
-        <div class="trip-info">
-            <h2>Informasi Perjalanan</h2>
-            <p><strong>Lokasi Penjemputan:</strong> <?php echo $orderSummary['pickup_location']; ?></p>
-            <p><strong>Lokasi Tujuan:</strong> <?php echo $orderSummary['dropoff_location']; ?></p>
-        </div>
-
-        <!-- Informasi Pengemudi -->
-        <div class="driver-info">
-            <h2>Informasi Pengemudi</h2>
-            <p><strong>Nama:</strong> <?php echo $orderSummary['driver']['name']; ?></p>
-            <p><strong>Rating:</strong> <?php echo $orderSummary['driver']['rating']; ?></p>
-            <p><strong>Kendaraan:</strong> <?php echo $orderSummary['driver']['car']['make']; ?> <?php echo $orderSummary['driver']['car']['model']; ?></p>
-            <p><strong>Plat Nomor:</strong> <?php echo $orderSummary['driver']['car']['plate']; ?></p>
-        </div>
-
-        <!-- Detail Tarif -->
-        <div class="fare-details">
-            <h2>Detail Tarif</h2>
-            <p><strong>Tarif Dasar:</strong> <?php echo formatCurrency($orderSummary['fare']['base_fare']); ?></p>
-            <p><strong>Tarif Jarak:</strong> <?php echo formatCurrency($orderSummary['fare']['distance_fare']); ?></p>
-            <p><strong>Tarif Waktu:</strong> <?php echo formatCurrency($orderSummary['fare']['time_fare']); ?></p>
-            <p><strong>Tarif Total:</strong> <?php echo formatCurrency($orderSummary['fare']['total_fare']); ?></p>
-        </div>
-
-        <!-- Detail Perjalanan -->
-        <div class="trip-details">
-            <h2>Detail Perjalanan</h2>
-            <p><strong>Jarak:</strong> <?php echo $orderSummary['trip_details']['distance']; ?></p>
-            <p><strong>Durasi:</strong> <?php echo $orderSummary['trip_details']['duration']; ?></p>
-        </div>
+    <!-- Informasi Pesanan -->
+    <div class="order-info">
+        <p><strong>Invoice ID:</strong> <?php echo $orderSummary['id']; ?></p>
     </div>
 
-    <?php
-    // Sertakan file footer
-    include 'footer.php';
-    ?>
+    <!-- Informasi Perjalanan -->
+    <div class="trip-info">
+        <h2>Informasi Perjalanan</h2>
+        <p><strong>Tanggal:</strong> <?php echo formatDate($orderSummary['tanggal']); ?></p>
+        <p><strong>Lokasi Penjemputan:</strong> <?php echo $orderSummary['asal']; ?></p>
+        <p><strong>Lokasi Tujuan:</strong> <?php echo $orderSummary['tujuan']; ?></p>
+    </div>
 
-</body>
+    <!-- Informasi Pengemudi -->
+    <div class="driver-info">
+        <h2>Informasi Pengemudi</h2>
+        <p><strong>Nama:</strong> <?php echo "$drivername"; ?></p>
+        <p><strong>Kendaraan:</strong> <?php echo $orderSummary['layanan']; ?> </p>
+        <p><strong>Plat Nomor:</strong> <?php echo "$driverplate"; ?></p>
+    </div>
 
-</html>
+    <!-- Detail Tarif -->
+    <div class="fare-details">
+        <h2>Total</h2>
+        <p><strong>Tarif Total:</strong> <?php echo formatCurrency($orderSummary["total"]); ?></p>
+    </div>
+
+    <!-- Detail Perjalanan -->
+    <div class="trip-details">
+        <h2>Detail Perjalanan</h2>
+        <p><strong>Jarak:</strong> <?php echo formatDistance($orderSummary['distance']) . " km"; ?></p>
+    </div>
+</div>
+
+<?php
+// Sertakan file footer
+include 'footer.php';
+?>

@@ -45,13 +45,6 @@ if (isset($_POST["order-submit"])) {
     $encryptionKey =  GenerateKey();
 
 
-    $sqlFindRandomDriver = "SELECT * FROM drivers WHERE jenis_kendaraan = '$jenis' ORDER BY RAND() LIMIT 1";
-    $stmt2 = mysqli_query($conn, $sqlFindRandomDriver);
-    if ($stmt2) {
-        $driverRow = mysqli_fetch_assoc($stmt2);
-        $driverID = $driverRow["id"];
-    }
-
     $sqlFindRandomAdmin = "SELECT * FROM admins ORDER BY RAND() LIMIT 1";
     $stmt3 = mysqli_query($conn, $sqlFindRandomAdmin);
     if ($stmt3) {
@@ -82,11 +75,10 @@ if (isset($_POST["order-submit"])) {
     }
 
     // Debug: Print out the values of variables to check their content
-    echo "driverID: " . $driverID . "<br>";
     echo "adminID: " . $adminID . "<br>";
     echo "layananID: " . $layananID . "<br>";
 
-    $sql = "INSERT INTO orders(id, tarif, tanggal, total, asal, tujuan, diskon, payment_method, notes, customers_id, drivers_id, admins_id, layanans_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO orders(id, tarif, tanggal, total, asal, tujuan, diskon, payment_method, notes, customers_id, admins_id, layanans_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("Location: ../order.php");
@@ -100,7 +92,7 @@ if (isset($_POST["order-submit"])) {
         $encryptedDestination = DataEncrypt($destination,$encryptionKey);
 
 
-        mysqli_stmt_bind_param($stmt, "sssssssssssss", $encryptedID, $tarif, $currdate, $price, $encryptedPickup, $encryptedDestination, $zero, $payment_method, $notes, $customerID, $driverID, $adminID, $layananID);
+        mysqli_stmt_bind_param($stmt, "ssssssssssss", $encryptedID, $tarif, $currdate, $price, $encryptedPickup, $encryptedDestination, $zero, $payment_method, $notes, $customerID, $adminID, $layananID);
         // Execute the SQL query
         if (mysqli_stmt_execute($stmt)) {
             $keyOrderID = generateIDKey();
@@ -115,7 +107,22 @@ if (isset($_POST["order-submit"])) {
                 mysqli_stmt_bind_param($stmtSqlKey, "sss", $keyOrderID, $encryptedID, $encryptionKey);
                 mysqli_stmt_execute($stmtSqlKey);
 
-                header("Location:../index.php");
+                $orderSummary = array(
+                    "id" => $invoiceID,
+                    "encryptedID" => $encryptedID,
+                    "tanggal" => $currdate,
+                    "total" => $price,
+                    "asal" => $pickup,
+                    "tujuan" => $destination,
+                    "payment_method" => $payment_method,
+                    "notes" => $notes,
+                    "layanan" => $jenis,
+                    "distance" => $distance
+                );
+
+                $_SESSION["ordersummary"] = $orderSummary;
+
+                header("Location:../ordersummary.php");
 
             } else {
                 echo "Error " . mysqli_error($conn);
@@ -126,7 +133,8 @@ if (isset($_POST["order-submit"])) {
             echo "Error executing query: " . mysqli_stmt_error($stmt);
         }
     }
-} else {
-    header("Location: ../order.php");
+} 
+else {
+    header("Location: ../ride.php");
     exit();
 }
