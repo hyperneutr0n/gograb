@@ -25,6 +25,11 @@ if ($adminLogged) { //SESSION berfungsi untuk store data dan bisa digunakan cros
                 </a>
             </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         <div class="row">
             <div class="col-8">
                 <label for="drvdata">Access Driver Data</label>
@@ -35,6 +40,12 @@ if ($adminLogged) { //SESSION berfungsi untuk store data dan bisa digunakan cros
                 </a>
             </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         <div class="row">
             <div class="col-8">
                 <label for="orderdata">Access Order Data</label>
@@ -45,6 +56,11 @@ if ($adminLogged) { //SESSION berfungsi untuk store data dan bisa digunakan cros
                 </a>
             </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
     </div>
 </main>
 
