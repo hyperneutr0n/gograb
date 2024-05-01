@@ -72,7 +72,7 @@ if (isset($_POST['register-submit'])) {
                 exit();
             } else {
                 $hashpass = PasswordHash($password);
-                $sql = "INSERT INTO customers(id, username, password, nama, email, no_telp,saldo,points) VALUES(?,?,?,?,?,?,?,?)";
+                $sql = "INSERT INTO customers(id, username, password, nama, email, saldo, no_telp) VALUES(?,?,?,?,?,?,?)";
                 $sql2 = "INSERT INTO keyCustomers(id,customers_id, encryptionkey) VALUES(?,?,?)";
                 $stmt = mysqli_stmt_init($conn);
                 $stmt2 = mysqli_stmt_init($conn);
@@ -87,10 +87,11 @@ if (isset($_POST['register-submit'])) {
                     //bind param
                     $key = GenerateKey();
                     $encryptedID = DataEncrypt($id, $key);
+                    $encryptedZero = DataEncrypt($zero, $key);
+                    $encryptedTelp = DataEncrypt($mobilenumber, $key);
                     $idKey = generateIDKey();
 
-                    $zero = 0;
-                    mysqli_stmt_bind_param($stmt, "ssssssss", $encryptedID, $username, $hashpass, $fullname, $email, $mobilenumber, $zero, $zero);
+                    mysqli_stmt_bind_param($stmt, "sssssss", $encryptedID, $username, $hashpass, $fullname, $email, $encryptedZero, $encryptedTelp);
                     mysqli_stmt_execute($stmt);
 
                     mysqli_stmt_bind_param($stmt2, "sss", $idKey,  $encryptedID, $key);

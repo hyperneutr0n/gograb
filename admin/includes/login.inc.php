@@ -7,7 +7,7 @@ if (isset($_POST["login-submit"])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-  $sql = "SELECT * FROM customers WHERE id=? OR username=?;";
+  $sql = "SELECT * FROM admins WHERE id=? OR username=?;";
   $stmt = mysqli_stmt_init($conn);
   if (!mysqli_stmt_prepare($stmt, $sql)) {
     header("Location: ../login.php?error=sqlerror");
@@ -27,7 +27,7 @@ if (isset($_POST["login-submit"])) {
       } elseif ($pwd_Check == true) {
         session_start();
 
-        $sql2 = "SELECT id FROM customers WHERE username='$username';";
+        $sql2 = "SELECT id FROM admins WHERE username='$username';";
         $stmt2 = mysqli_query($conn, $sql2);
 
         if ($stmt2) {
@@ -40,7 +40,7 @@ if (isset($_POST["login-submit"])) {
 
 
 
-        $_SESSION['userid'] = $row['id']; 
+        $_SESSION['userid'] = $row['id'];
         $_SESSION['username'] = $row['username'];
 
         $userLogged = true;

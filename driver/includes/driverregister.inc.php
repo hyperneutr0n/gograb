@@ -120,9 +120,11 @@ if (isset($_POST['register-submit'])) {
           //bind param
           $key = GenerateKey();
           $encryptedID = DataEncrypt($id, $key);
+          $encryptedKtp = DataEncrypt($nomor_ktp, $key);
+          $encryptedTelp = DataEncrypt($nomor_telp, $key);
+          $encryptedZero = DataEncrypt(0, $key);
           $idKey = generateIDKey();
-          $zero = 0;
-          mysqli_stmt_bind_param($stmt, "ssssssssss", $encryptedID, $fullname, $username, $email, $hashpass, $zero, $mobilenumber, $ktp, $vehicle_type, $vehicle_plate);
+          mysqli_stmt_bind_param($stmt, "ssssssssss", $encryptedID, $fullname, $username, $email, $hashpass, $encryptedZero, $encryptedTelp, $encryptedKtp, $vehicle_type, $vehicle_plate);
           mysqli_stmt_execute($stmt);
 
           mysqli_stmt_bind_param($stmt2, "sss", $idKey, $encryptedID, $key);
