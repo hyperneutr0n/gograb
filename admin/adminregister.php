@@ -1,11 +1,9 @@
 <?php
 
-if(isset($_POST["adminLogged"]) && $_POST["adminLogged"] == false){
-    require "header.php";
-}
-else{
-    header("Location: datacustomer.php");
-}
+$adminLogged = false;
+require "header.php";
+
+
 ?>
 
 <main>

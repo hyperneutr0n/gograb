@@ -106,7 +106,7 @@ if (isset($_POST['register-submit'])) {
           mysqli_stmt_bind_param($stmt2, "sss", $idKey, $encryptedID, $key);
           mysqli_stmt_execute($stmt2);
 
-          header("Location: ../register.php?register=success");
+          header("Location: ../adminregister.php?register=success");
           exit();
         }
       }
