@@ -27,19 +27,27 @@ $historyTransaction = isset($_SESSION["historyTransaction"]) ? $_SESSION["histor
                         <th>Discount</th>
                         <th>Payment Method</th>
                         <th>Notes</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($historyTransaction as $historyRow) : ?>
                         <tr>
-                            <td><?php echo $historyRow['id']; ?></td>
-                            <td><?php echo $historyRow['tanggal']; ?></td>
-                            <td><?php echo $historyRow['asal']; ?></td>
-                            <td><?php echo $historyRow['tujuan']; ?></td>
-                            <td><?php echo $historyRow['total']; ?></td>
-                            <td><?php echo $historyRow['diskon']; ?></td>
-                            <td><?php echo $historyRow['payment_method']; ?></td>
-                            <td><?php echo $historyRow['notes']; ?></td>
+                            <form action="invoice.php" method="post">
+                                <td><?php echo $historyRow['id']; ?></td>
+                                <td><?php echo $historyRow['tanggal']; ?></td>
+                                <td><?php echo $historyRow['asal']; ?></td>
+                                <td><?php echo $historyRow['tujuan']; ?></td>
+                                <td><?php echo $historyRow['total']; ?></td>
+                                <td><?php echo $historyRow['diskon']; ?></td>
+                                <td><?php echo $historyRow['payment_method']; ?></td>
+                                <td><?php echo $historyRow['notes']; ?></td>
+                                <td>
+                                    <input type="hidden" name="invoice_id" value="<?php echo $historyRow['id']; ?>">
+                                    <button type="submit" class="btn btn-primary">See Receipt</button>
+                                    <!-- <button onclick="window.print()" class="btn btn-primary">print</button> -->
+                                </td>
+                            </form>
                         </tr>
                     <?php endforeach; ?>
                     <?php if (empty($historyTransaction)) : ?>
