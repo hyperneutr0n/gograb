@@ -1,10 +1,12 @@
 <?php
-require "header.php";
 session_start();
 
 if (!isset($_SESSION["userLogged"]) || !$_SESSION["userLogged"]) {
     header("Location: login.php");
     exit();
+} else {
+    $userLogged = true;
+    require "header.php";
 }
 
 $historyTransaction = isset($_SESSION["historyTransaction"]) ? $_SESSION["historyTransaction"] : array();

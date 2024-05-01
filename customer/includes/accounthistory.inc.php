@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "dbconn.inc.php";
 include "cryptographic.inc.php";
 
@@ -6,7 +7,7 @@ include "cryptographic.inc.php";
 $historyTransaction = array();
 
 if (isset($_SESSION["userLogged"]) && $_SESSION["userLogged"] == true) {
-  $id =  $_SESSION["id"];
+  $id =  $_SESSION["userid"];
   echo "User ID: $id";
 
   //query encryption key nya customer
@@ -51,6 +52,5 @@ if (isset($_SESSION["userLogged"]) && $_SESSION["userLogged"] == true) {
     echo "Error fetching encryption key: " . mysqli_error($conn);
   }
 } else {
-  header("Location: ../index.php");
   exit();
 }

@@ -13,9 +13,9 @@ if ($userLogged) { //SESSION berfungsi untuk store data dan bisa digunakan cross
 }
 ?>
 <main>
-<div class="container">
+<div class="container container-login">
         <div class="image">
-            <img src="homepic1.jpg" alt="Driver in car" width="800" height="400">
+            <img src="assets/homepic1.jpg" alt="Driver in car" width="800" height="400">
         </div>
 
         <?php
@@ -40,10 +40,12 @@ if ($userLogged) { //SESSION berfungsi untuk store data dan bisa digunakan cross
         </div>
 
         <div class="image">
-            <img src="homepic2.jpg" width="612" height="400">
+            <img src="assets/homepic2.jpg" width="612" height="400">
         </div>
 
     </div>
+    <br>
+    <br>
 </main>
 
 

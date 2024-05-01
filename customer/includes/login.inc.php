@@ -35,19 +35,19 @@ if (isset($_POST["login-submit"])) {
           $id = $row["id"];
 
           $_SESSION["id"] = $id;
+          $_SESSION['userid'] = $row['id']; 
+          $_SESSION['username'] = $row['username'];
+  
+          $userLogged = true;
+          $_SESSION["userLogged"] = $userLogged;
+  
+          header("Location: ../index.php?login=loginSuccess");
+          exit();
         }
 
 
 
 
-        $_SESSION['userid'] = $row['id']; 
-        $_SESSION['username'] = $row['username'];
-
-        $userLogged = true;
-        $_SESSION["userLogged"] = $userLogged;
-
-        header("Location: ../index.php?login=loginSuccess");
-        exit();
       } else {
         header("Location: ../login.php?error=wrongPassword");
         exit();
